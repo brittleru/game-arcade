@@ -13,16 +13,13 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
 
     @Override
     public void initialize(final FieldMatch constraintAnnotation) {
-
         firstFieldName = constraintAnnotation.first();
         secondFieldName = constraintAnnotation.second();
         message = constraintAnnotation.message();
-
     }
 
     @Override
     public boolean isValid(final Object o, final ConstraintValidatorContext constraintValidatorContext) {
-
         boolean valid = true;
 
         try {
@@ -30,8 +27,7 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
             final Object secondObject = new BeanWrapperImpl(o).getPropertyValue(secondFieldName);
 
             valid = firstObject == null && secondObject == null || firstObject != null && firstObject.equals(secondObject);
-        }
-        catch (final Exception e) {
+        } catch (final Exception ignored) {
             ;
         }
 
@@ -41,9 +37,6 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
                     .addConstraintViolation()
                     .disableDefaultConstraintViolation();
         }
-
-
         return valid;
-
     }
 }

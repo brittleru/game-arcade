@@ -1,8 +1,12 @@
 package com.arcade.entity.user;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "user")
@@ -14,7 +18,7 @@ public class User {
     private int id;
 
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -28,6 +32,14 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private Date updatedAt;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -40,20 +52,24 @@ public class User {
 
     }
 
-    public User(String userName, String password, String firstName, String lastName, String email) {
-        this.userName = userName;
+    public User(String username, String password, String firstName, String lastName, String email, Date createdAt, Date updatedAt) {
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public User(String userName, String password, String firstName, String lastName, String email, Collection<Role> roles) {
-        this.userName = userName;
+    public User(String username, String password, String firstName, String lastName, String email, Date createdAt, Date updatedAt, Collection<Role> roles) {
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.roles = roles;
     }
 
@@ -65,12 +81,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -105,6 +121,22 @@ public class User {
         this.email = email;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public Collection<Role> getRoles() {
         return roles;
     }
@@ -117,11 +149,13 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 ", roles=" + roles +
                 '}';
     }

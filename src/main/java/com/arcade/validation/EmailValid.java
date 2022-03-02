@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface EmailValid {
 
-    String message() default "Invalid email";
+    String message() default " address invalid";
 
     Class<?>[] groups() default {};
 

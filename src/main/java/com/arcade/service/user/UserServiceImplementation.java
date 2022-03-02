@@ -1,6 +1,5 @@
 package com.arcade.service.user;
 
-import com.arcade.config.CustomAuthenticationSuccessHandler;
 import com.arcade.dao.user.RoleDao;
 import com.arcade.dao.user.UserDao;
 import com.arcade.entity.user.Role;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -26,21 +24,28 @@ public class UserServiceImplementation implements UserService {
 
     private final static Logger logger = Logger.getLogger(UserServiceImplementation.class.getName());
 
+    @Autowired
     private UserDao userDao;
+    @Autowired
     private RoleDao roleDao;
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImplementation(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder passwordEncoder) {
-        this.userDao = userDao;
-        this.roleDao = roleDao;
-        this.passwordEncoder = passwordEncoder;
-    }
+//    public UserServiceImplementation() {
+//
+//    }
+
+//    @Autowired
+//    public UserServiceImplementation(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder passwordEncoder) {
+//        this.userDao = userDao;
+//        this.roleDao = roleDao;
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     @Override
     @Transactional
-    public User findByUserName(String userName) {
-        return userDao.findByUserName(userName);
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class UserServiceImplementation implements UserService {
     public void save(CheckedUser checkedUser) {
         User user = new User();
 
-        user.setUserName(checkedUser.getUserName());
+        user.setUsername(checkedUser.getUserName());
         user.setPassword(passwordEncoder.encode(checkedUser.getPassword()));
         user.setFirstName(checkedUser.getFirstName());
         user.setLastName(checkedUser.getLastName());
@@ -61,9 +66,21 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     @Transactional
+    public boolean userNameExists(String userName) {
+        return userDao.usernameExists(userName);
+    }
+
+    @Override
+    @Transactional
+    public boolean emailExists(String email) {
+        return userDao.emailExists(email);
+    }
+
+    @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userDao.findByUserName(username);
+        User user = userDao.findByUsername(username);
         logger.info(String.valueOf(user));
 
         if (user == null) {
@@ -71,7 +88,7 @@ public class UserServiceImplementation implements UserService {
         }
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUserName(),
+                user.getUsername(),
                 user.getPassword(),
                 mapRolesToAuthorities(user.getRoles())
         );
@@ -81,4 +98,5 @@ public class UserServiceImplementation implements UserService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
 }

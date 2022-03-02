@@ -1,6 +1,7 @@
 package com.arcade.config;
 
 import com.arcade.service.user.UserService;
+import com.arcade.service.user.UserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -35,18 +36,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        this.userService = userService;
     }
 
+    @Bean UserService userService() {
+        return new UserServiceImplementation();
+    }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-//        auth.setUserDetailsService(userService); //set the custom user details service
-//        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
-//        return auth;
-//    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService());    //set the custom user details service
+        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
+        return auth;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select user.username, user.id, role.id, users_roles.user_id, users_roles.role_id from user, role, users_roles " +
                         "where user.id=users_roles.user_id and role.id=users_roles.role_id and user.username=?");
 //        auth.jdbcAuthentication().dataSource(dataSource);
-//        auth.authenticationProvider(authenticationProvider());
+        auth.authenticationProvider(authenticationProvider());
     }
 
 
@@ -65,8 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/games/**").hasRole("NORMAL")
-                .antMatchers("/profile/**").hasRole("NORMAL")
+                .antMatchers("/games/**").hasAnyAuthority("NORMAL", "ADMIN", "SUPERUSER")
+                .antMatchers("/profile/**").hasAnyAuthority("NORMAL", "ADMIN", "SUPERUSER")
                 .antMatchers("/resources/**").permitAll()
                 .and()
                 .formLogin()

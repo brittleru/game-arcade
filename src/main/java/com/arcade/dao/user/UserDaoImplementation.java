@@ -19,22 +19,13 @@ public class UserDaoImplementation implements UserDao {
     @Autowired
     public UserDaoImplementation(EntityManager entityManager) {
         this.entityManager = entityManager;
-
-
     }
 
     @Override
-    public User findByUserName(String userName) {
-
+    public User findByUsername(String username) {
         Session session = entityManager.unwrap(Session.class);
-
-        Query<User> query1 = session.createQuery("from User where userName='brittle'", User.class);
-        User test = query1.getSingleResult();
-        logger.info("\n\n" + test.toString() + "\n\n");
-
-        Query<User> query = session.createQuery("from User where userName:=tempName", User.class);
-        query.setParameter("tempName", userName);
-
+        Query<User> query = session.createQuery("from User where username=:tempName", User.class);
+        query.setParameter("tempName", username);
 
         User user = null;
 
@@ -43,19 +34,33 @@ public class UserDaoImplementation implements UserDao {
         } catch (Exception e) {
             logger.warning(e.getMessage());
         }
-        logger.info(String.valueOf(user));
         return user;
     }
 
     @Override
     public void save(User user) {
-
         Session session = entityManager.unwrap(Session.class);
-
-//
-//
-
         session.saveOrUpdate(user);
+    }
 
+    @Override
+    public boolean usernameExists(String username) {
+        User user = findByUsername(username);
+        return user != null;
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        Session session = entityManager.unwrap(Session.class);
+        Query<User> query = session.createQuery("from User where email=:tempEmail", User.class);
+        query.setParameter("tempEmail", email);
+
+        User user = null;
+        try {
+            user = query.getSingleResult();
+        } catch (Exception e) {
+            logger.warning(e.getMessage());
+        }
+        return user != null;
     }
 }

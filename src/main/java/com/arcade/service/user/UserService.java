@@ -6,8 +6,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    public User findByUserName(String userName);
+    public User findByUsername(String username);
 
     public void save(CheckedUser checkedUser);
+
+    public boolean userNameExists(String userName);
+
+    public boolean emailExists(String email);
 
 }

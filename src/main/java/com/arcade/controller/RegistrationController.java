@@ -3,7 +3,6 @@ package com.arcade.controller;
 import com.arcade.entity.user.User;
 import com.arcade.service.user.UserService;
 import com.arcade.validateentity.CheckedUser;
-import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -58,7 +57,7 @@ public class RegistrationController {
         User existing = null;
 
         try {
-            existing = userService.findByUserName(userName);
+            existing = userService.findByUsername(userName);
         }
         catch (Exception e) {
             logger.warning(e.getMessage());

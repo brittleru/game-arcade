@@ -12,11 +12,11 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`username` varchar(50) NOT NULL,
+	`username` varchar(50) NOT NULL UNIQUE,
 	`password` char(80) NOT NULL,
 	`first_name` varchar(50) NOT NULL,
 	`last_name` varchar(50) NOT NULL,
-	`email` varchar(50) NOT NULL,
+	`email` varchar(50) NOT NULL UNIQUE,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
@@ -77,13 +77,3 @@ CREATE TABLE `users_roles` (
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO `users_roles` (user_id, role_id) VALUES (1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (3, 1);
-
-
-
-
-
-
-
-
-
-

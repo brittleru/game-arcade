@@ -1,6 +1,10 @@
 package com.arcade.validateentity;
 
+import com.arcade.validation.EmailValid;
 import com.arcade.validation.FieldMatch;
+import com.arcade.validation.UniqueEmail;
+import com.arcade.validation.UniqueUsername;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,15 +19,16 @@ import javax.validation.constraints.Size;
 public class CheckedUser {
 
     @NotNull(message = "Required")
-    @Size(min = 1, message = "Required")
+    @Size(min = 2, message = "Required")
+    @UniqueUsername
     private String userName;
 
     @NotNull(message = "Required")
-    @Size(min = 1, message = "Required")
+    @Size(min = 3, message = "Required")
     private String password;
 
     @NotNull(message = "Required")
-    @Size(min = 1, message = "Required")
+    @Size(min = 3, message = "Required")
     private String matchingPassword;
 
     @NotNull(message = "Required")
@@ -35,7 +40,9 @@ public class CheckedUser {
     private String lastName;
 
     @NotNull(message = "Required")
-    @Size(min = 1, message = "Required")
+    @Size(min = 3, message = "Required")
+    @EmailValid
+    @UniqueEmail
     private String email;
 
 
