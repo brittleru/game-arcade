@@ -28,14 +28,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        logger.info("\n\nIn CustomAuthenticationSuccessHandler");
-
         String userName = authentication.getName();
-
         logger.info("userName = " + userName);
 
         User user = userService.findByUsername(userName);
-
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 

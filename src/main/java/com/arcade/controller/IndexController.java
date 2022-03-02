@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 @Controller
 public class IndexController {
 
-    private final static Logger logger = Logger.getLogger(RegistrationController.class.getName());
+    private final static Logger logger = Logger.getLogger(IndexController.class.getName());
 //    private UserService userService;
 //
 //    @Autowired

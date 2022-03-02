@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/games")
+@RequestMapping("/games")
 public class GamesController {
-
 
     @GetMapping("/list")
     public String getGamesList(Model model) {
@@ -26,7 +25,7 @@ public class GamesController {
 
         model.addAttribute("games", gamesList);
 
-        return "list-games";
+        return "games/list-games";
     }
 
 }

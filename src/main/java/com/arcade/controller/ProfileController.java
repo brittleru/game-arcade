@@ -16,6 +16,7 @@ public class ProfileController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+//        String username = authentication.getAuthorities().toString();
         String username = authentication.getPrincipal().toString();
 
         model.addAttribute("userName", username);

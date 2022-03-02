@@ -31,6 +31,7 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    // TODO: change this to have constructor autowired and remove logging of the user stuffs
 //    public UserServiceImplementation() {
 //
 //    }

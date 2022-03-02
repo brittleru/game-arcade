@@ -5,6 +5,9 @@ import com.arcade.service.user.UserService;
 import com.arcade.validateentity.CheckedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,8 +39,11 @@ public class RegistrationController {
 
     @GetMapping("/show-register")
     public String showRegister(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
         model.addAttribute("newUser", new CheckedUser());
-
         return "auth/register-form";
     }
 
