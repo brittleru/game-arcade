@@ -19,6 +19,8 @@ public class UserDaoImplementation implements UserDao {
     @Autowired
     public UserDaoImplementation(EntityManager entityManager) {
         this.entityManager = entityManager;
+
+
     }
 
     @Override
@@ -26,15 +28,19 @@ public class UserDaoImplementation implements UserDao {
 
         Session session = entityManager.unwrap(Session.class);
 
+        Query<User> query1 = session.createQuery("from User where userName='brittle'", User.class);
+        User test = query1.getSingleResult();
+        logger.info("\n\n" + test.toString() + "\n\n");
+
         Query<User> query = session.createQuery("from User where userName:=tempName", User.class);
         query.setParameter("tempName", userName);
+
 
         User user = null;
 
         try {
             user = query.getSingleResult();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.warning(e.getMessage());
         }
         logger.info(String.valueOf(user));
@@ -45,6 +51,9 @@ public class UserDaoImplementation implements UserDao {
     public void save(User user) {
 
         Session session = entityManager.unwrap(Session.class);
+
+//
+//
 
         session.saveOrUpdate(user);
 

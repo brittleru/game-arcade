@@ -17,6 +17,8 @@ CREATE TABLE `user` (
 	`first_name` varchar(50) NOT NULL,
 	`last_name` varchar(50) NOT NULL,
 	`email` varchar(50) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -75,3 +77,13 @@ CREATE TABLE `users_roles` (
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO `users_roles` (user_id, role_id) VALUES (1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (3, 1);
+
+
+
+
+
+
+
+
+
+

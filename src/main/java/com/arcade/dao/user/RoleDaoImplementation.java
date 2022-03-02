@@ -1,6 +1,7 @@
 package com.arcade.dao.user;
 
 import com.arcade.entity.user.Role;
+import com.arcade.entity.user.User;
 import org.apache.juli.logging.Log;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -39,6 +40,9 @@ public class RoleDaoImplementation implements RoleDao {
         catch (Exception e) {
             logger.warning(e.getMessage());
         }
+
+        logger.info("\n\n" + query.getSingleResult().toString() + "\n\n");
+
 
         return role;
 
