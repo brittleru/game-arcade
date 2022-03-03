@@ -52,6 +52,23 @@ public class User {
 
     }
 
+    public User(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email, Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.roles = roles;
+    }
+
     public User(String username, String password, String firstName, String lastName, String email, Date createdAt, Date updatedAt) {
         this.username = username;
         this.password = password;

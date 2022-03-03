@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -76,11 +77,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.authorizeRequests()
+        // TODO: only certain people can use the POST, PUT and DELETE api
+        http
+            .csrf()
+                .ignoringAntMatchers("/api/**")
+            .and()
+            .authorizeRequests()
                 .antMatchers("/games/**").hasAnyAuthority("ROLE_NORMAL", "ROLE_ADMIN", "ROLE_SUPERUSER")
                 .antMatchers("/profile/**").hasAnyAuthority("ROLE_NORMAL", "ROLE_ADMIN", "ROLE_SUPERUSER")
+//                .antMatchers(HttpMethod.POST, "/api/**").authenticated()
+//                .antMatchers(HttpMethod.PUT, "/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPERUSER")
+//                .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPERUSER")
                 .antMatchers("/resources/**").permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                     .loginPage("/login")

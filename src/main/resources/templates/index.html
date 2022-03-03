@@ -27,11 +27,17 @@
         <p class="alert alert-success" role="alert">Successfully Logged Out</p>
     </div>
 
-    <a th:href="@{/games/list}" class="btn btn-primary">See Games</a>
+    <a th:href="@{/games/list}" class="btn btn-primary">Games</a>
     <br>
     <br>
     <br>
-    <a th:href="@{/profile/user}" class="btn btn-primary">See Profile</a>
+    <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERUSER')">
+        <a th:href="@{admin/users/all}" class="btn btn-secondary">Users</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <a th:href="@{/profile/user}" class="btn btn-primary">Profile</a>
     <br>
     <br>
     <br>
