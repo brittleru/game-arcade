@@ -18,9 +18,9 @@ public class GamesController {
 
 
         List<String> gamesList = new ArrayList<>();
-        gamesList.add("Overwatch");
         gamesList.add("Nier: Automata");
         gamesList.add("Nier: Replicant");
+        gamesList.add("Lost Ark");
         gamesList.add("Bayonetta");
 
         model.addAttribute("games", gamesList);

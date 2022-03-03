@@ -24,5 +24,10 @@ public class LoginController {
         return "security/access-denied";
     }
 
+    @GetMapping("/logout-user-successfully")
+    public String showLogoutPage() {
+        return "auth/logout-page";
+    }
+
 
 }

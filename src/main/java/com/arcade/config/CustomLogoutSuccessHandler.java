@@ -17,11 +17,16 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler im
     private final static Logger logger = Logger.getLogger(CustomLogoutSuccessHandler.class.getName());
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
+    public void onLogoutSuccess(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication
+    ) throws IOException, ServletException {
         String refererUrl = request.getHeader("Referer");
         logger.info("Logout from: " + refererUrl);
-        // TODO: change this to give user feed back on logout same for login
-        response.sendRedirect(request.getContextPath() + "/");
+        // TODO: maybe add a redirect to the page the user was before
+        response.sendRedirect(request.getContextPath() + "/?logout");
     }
+
+
 }

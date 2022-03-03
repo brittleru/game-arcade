@@ -1,5 +1,8 @@
 package com.arcade.config;
 
+import com.arcade.dao.user.RoleDao;
+import com.arcade.dao.user.UserDao;
+import com.arcade.entity.user.User;
 import com.arcade.service.user.UserService;
 import com.arcade.service.user.UserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +25,20 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // might delete the user service autowired
-//    private UserService userService;
     private DataSource dataSource;
+    private UserDao userDao;
+    private RoleDao roleDao;
 
     @Autowired
-    public SecurityConfig(
-            DataSource dataSource
-//            UserService userService
-    ) {
+    public SecurityConfig(DataSource dataSource, UserDao userDao, RoleDao roleDao) {
         this.dataSource = dataSource;
-//        this.userService = userService;
+        this.userDao = userDao;
+        this.roleDao = roleDao;
     }
 
     @Bean
     public UserService userService() {
-        return new UserServiceImplementation();
+        return new UserServiceImplementation(userDao, roleDao, passwordEncoder());
     }
 
     @Bean
@@ -65,13 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-//        auth.authenticationProvider(authenticationProvider);
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, true from user where username=?")
                 .authoritiesByUsernameQuery("select user.username, user.id, role.id, users_roles.user_id, users_roles.role_id from user, role, users_roles " +
                         "where user.id=users_roles.user_id and role.id=users_roles.role_id and user.username=?");
-//        auth.jdbcAuthentication().dataSource(dataSource);
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -95,6 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessHandler(logoutSuccessHandler())
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
+//                    .clearAuthentication(true)
                     .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied");

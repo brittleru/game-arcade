@@ -20,6 +20,13 @@
 <div class="container">
     <p th:text="'Time on the server is ' + ${date}" class="green-text"/>
 
+    <div th:if="${param.login}" sec:authorize="isAuthenticated()">
+        <p class="alert alert-success" role="alert">Successfully Logged In</p>
+    </div>
+    <div th:if="${param.logout}" sec:authorize="!isAuthenticated()">
+        <p class="alert alert-success" role="alert">Successfully Logged Out</p>
+    </div>
+
     <a th:href="@{/games/list}" class="btn btn-primary">See Games</a>
     <br>
     <br>
@@ -35,7 +42,9 @@
             <a th:href="@{/login}" class="btn btn-primary">Login</a>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout-user}" class="btn btn-primary">Logout</a>
+            <form th:action="@{/logout-user}" method="POST">
+                <input type="submit" value="Logout" class="btn btn-primary">
+            </form>
         </div>
     </div>
 

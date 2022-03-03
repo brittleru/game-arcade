@@ -24,24 +24,16 @@ public class UserServiceImplementation implements UserService {
 
     private final static Logger logger = Logger.getLogger(UserServiceImplementation.class.getName());
 
-    @Autowired
     private UserDao userDao;
-    @Autowired
     private RoleDao roleDao;
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    // TODO: change this to have constructor autowired and remove logging of the user stuffs
-//    public UserServiceImplementation() {
-//
-//    }
-
-//    @Autowired
-//    public UserServiceImplementation(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder passwordEncoder) {
-//        this.userDao = userDao;
-//        this.roleDao = roleDao;
-//        this.passwordEncoder = passwordEncoder;
-//    }
+    @Autowired
+    public UserServiceImplementation(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder passwordEncoder) {
+        this.userDao = userDao;
+        this.roleDao = roleDao;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional
@@ -53,13 +45,11 @@ public class UserServiceImplementation implements UserService {
     @Transactional
     public void save(CheckedUser checkedUser) {
         User user = new User();
-
         user.setUsername(checkedUser.getUserName());
         user.setPassword(passwordEncoder.encode(checkedUser.getPassword()));
         user.setFirstName(checkedUser.getFirstName());
         user.setLastName(checkedUser.getLastName());
         user.setEmail(checkedUser.getEmail());
-
         user.setRoles(List.of(roleDao.findRoleByName("ROLE_NORMAL")));
 
         userDao.save(user);
@@ -80,11 +70,10 @@ public class UserServiceImplementation implements UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = userDao.findByUsername(username);
-        logger.info(String.valueOf(user));
 
         if (user == null) {
+            logger.warning("Non-existent username");
             throw new UsernameNotFoundException("Invalid username or password.");
         }
 
