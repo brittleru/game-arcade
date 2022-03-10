@@ -10,7 +10,9 @@ public class AdminController {
 
     @GetMapping("/users/all")
     public String getUsersList() {
-
         return "admin/users";
     }
+
+
+
 }
