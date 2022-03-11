@@ -3,7 +3,7 @@ package com.arcade.exception;
 public class EmailTakenException extends RuntimeException {
 
     public EmailTakenException() {
-
+        super();
     }
 
     public EmailTakenException(String message) {

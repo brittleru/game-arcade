@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 @Service
 public class AdminServiceImplementation implements AdminService {
 
+    // TODO: add Optional<?> to all possible methods in service classes
+
     private final static Logger logger = Logger.getLogger(UserDaoImplementation.class.getName());
 
     private final EntityManager entityManager;

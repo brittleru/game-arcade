@@ -1,13 +1,7 @@
-package com.arcade.entity;
+package com.arcade.dto;
 
-import javax.persistence.*;
+public abstract class BaseDto {
 
-@MappedSuperclass
-public abstract class BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
     public int getId() {
@@ -20,7 +14,7 @@ public abstract class BaseEntity {
 
     @Override
     public String toString() {
-        return "BaseEntity{" +
+        return "BaseDto{" +
                 "id=" + id +
                 '}';
     }

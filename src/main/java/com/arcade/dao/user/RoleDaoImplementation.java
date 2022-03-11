@@ -43,7 +43,6 @@ public class RoleDaoImplementation implements RoleDao {
 
         logger.info("\n\n" + query.getSingleResult().toString() + "\n\n");
 
-
         return role;
 
     }
