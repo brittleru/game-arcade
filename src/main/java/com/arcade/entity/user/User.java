@@ -1,6 +1,7 @@
 package com.arcade.entity.user;
 
 
+import com.arcade.entity.BaseEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,12 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "user")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class User extends BaseEntity {
 
     @Column(name = "username")
     private String username;
@@ -90,14 +86,6 @@ public class User {
         this.roles = roles;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -165,7 +153,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", userName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +

@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * This controller and service was made to fetch all the endpoints into JavaScript for the frontend
+ * But I believe that this method is heavy because you have to ask the server for a Get each time
+ * you need to fetch that data.
+ */
 @RestController
 @RequestMapping("api/v1")
 public class EndpointsController {

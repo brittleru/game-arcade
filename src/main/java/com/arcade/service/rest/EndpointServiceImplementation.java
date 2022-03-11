@@ -12,13 +12,16 @@ public class EndpointServiceImplementation implements EndpointService {
     @Value("${rest.endpoints}")
     private String[] restEndpoints;
 
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
     @Override
     public Map<String, String> getAllRestEndpoints() {
         final Map<String, String> endpointsMap = new HashMap<>();
         for (String restEndpoint : restEndpoints) {
             int index = restEndpoint.lastIndexOf("/");
             String endpointLastSlash = restEndpoint.substring(index + 1);
-            endpointsMap.put(endpointLastSlash, restEndpoint);
+            endpointsMap.put(endpointLastSlash, contextPath + restEndpoint);
         }
 
         return endpointsMap;

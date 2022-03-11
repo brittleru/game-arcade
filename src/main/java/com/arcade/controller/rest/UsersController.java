@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class UsersController {
 
-    private AdminService adminService;
+    private final AdminService adminService;
 
     @Autowired
     public UsersController(AdminService adminService) {
