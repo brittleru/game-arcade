@@ -14,7 +14,7 @@ public class UserDaoImplementation implements UserDao {
 
     private final static Logger logger = Logger.getLogger(UserDaoImplementation.class.getName());
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public UserDaoImplementation(EntityManager entityManager) {

@@ -3,42 +3,45 @@ package com.arcade;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.logging.Logger;
 
 @SpringBootApplication
 public class GameArcadeApplication {
 
-	@Value("${server.port}")
-	private int serverPortProp;
+    private final static Logger logger = Logger.getLogger(GameArcadeApplication.class.getName());
 
-	@Value("${server.servlet.context-path}")
-	private String serverContextPathProp;
+    private static int serverPort;
+    private static String serverContextPath;
+    private static boolean isBrowserStart;
 
-	private static int serverPort;
-	private static String serverContextPath;
+    public static void main(String[] args) throws IOException {
+        SpringApplication.run(GameArcadeApplication.class, args);
+        String url = "http://localhost:" + String.valueOf(serverPort) + serverContextPath;
+        logger.info("Application started on: " + url);
+        if (isBrowserStart) {
+            openBrowser(url);
+        }
+    }
 
-	public static void main(String[] args) throws IOException {
-		SpringApplication.run(GameArcadeApplication.class, args);
-//		openBrowser();
-	}
+    private static void openBrowser(String url) throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        runtime.exec("rundll32 url.dll, FileProtocolHandler " + url);
+    }
 
-	private static void openBrowser() throws IOException {
-		String url = "http://localhost:" + String.valueOf(serverPort) + serverContextPath;
-		Runtime runtime = Runtime.getRuntime();
-		runtime.exec("rundll32 url.dll, FileProtocolHandler " + url);
+    @Value("${server.port}")
+    public void setServerPort(int port) {
+        serverPort = port;
+    }
 
-	}
+    @Value("${server.servlet.context-path}")
+    public void setServerContextPath(String contextPath) {
+        serverContextPath = contextPath;
+    }
 
-	@Value("${server.port}")
-	public void setServerPort(int port) {
-		serverPort = port;
-	}
-
-	@Value("${server.servlet.context-path}")
-	public void setServerContextPath(String contextPath) {
-		serverContextPath = contextPath;
-	}
+    @Value("${browser.start}")
+    public void setIsBrowserStart(boolean browserStart) {
+        isBrowserStart = browserStart;
+    }
 }

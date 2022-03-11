@@ -1,12 +1,17 @@
 package com.arcade.exception;
 
+import com.arcade.dao.user.UserDaoImplementation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.logging.Logger;
+
 @ControllerAdvice
 public class UsersRestExceptionHandler {
+
+    private final static Logger logger = Logger.getLogger(UserDaoImplementation.class.getName());
 
     /**
      * This handler will catch only if a value for ID that isn't in the database is passed to the request

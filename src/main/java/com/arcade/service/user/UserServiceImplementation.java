@@ -24,9 +24,9 @@ public class UserServiceImplementation implements UserService {
 
     private final static Logger logger = Logger.getLogger(UserServiceImplementation.class.getName());
 
-    private UserDao userDao;
-    private RoleDao roleDao;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final UserDao userDao;
+    private final RoleDao roleDao;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImplementation(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder passwordEncoder) {

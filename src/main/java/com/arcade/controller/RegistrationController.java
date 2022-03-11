@@ -23,7 +23,7 @@ public class RegistrationController {
 
     private final static Logger logger = Logger.getLogger(RegistrationController.class.getName());
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public RegistrationController(UserService userService) {

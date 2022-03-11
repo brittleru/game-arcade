@@ -15,8 +15,6 @@ public class GamesController {
 
     @GetMapping("/list")
     public String getGamesList(Model model) {
-
-
         List<String> gamesList = new ArrayList<>();
         gamesList.add("Nier: Automata");
         gamesList.add("Nier: Replicant");

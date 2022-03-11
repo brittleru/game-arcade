@@ -17,7 +17,7 @@ public class RoleDaoImplementation implements RoleDao {
 
     private final static Logger logger = Logger.getLogger(RoleDaoImplementation.class.getName());
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public RoleDaoImplementation(EntityManager entityManager) {

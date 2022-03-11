@@ -23,11 +23,10 @@ public class AdminServiceImplementation implements AdminService {
 
     private final static Logger logger = Logger.getLogger(UserDaoImplementation.class.getName());
 
-    private EntityManager entityManager;
-    private RoleDao roleDao;
-    private UserDao userDao;
-    private BCryptPasswordEncoder passwordEncoder;
-
+    private final EntityManager entityManager;
+    private final RoleDao roleDao;
+    private final UserDao userDao;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public AdminServiceImplementation(EntityManager entityManager, RoleDao roleDao, UserDao userDao, BCryptPasswordEncoder passwordEncoder) {

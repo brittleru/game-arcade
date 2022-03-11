@@ -2,11 +2,9 @@ package com.arcade.config;
 
 import com.arcade.dao.user.RoleDao;
 import com.arcade.dao.user.UserDao;
-import com.arcade.entity.user.User;
 import com.arcade.service.user.UserService;
 import com.arcade.service.user.UserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,9 +24,9 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private DataSource dataSource;
-    private UserDao userDao;
-    private RoleDao roleDao;
+    private final DataSource dataSource;
+    private final UserDao userDao;
+    private final RoleDao roleDao;
 
     @Autowired
     public SecurityConfig(DataSource dataSource, UserDao userDao, RoleDao roleDao) {

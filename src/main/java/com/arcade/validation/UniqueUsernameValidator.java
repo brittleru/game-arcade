@@ -8,11 +8,16 @@ import javax.validation.ConstraintValidatorContext;
 
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UniqueUsernameValidator(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         return s != null && !userService.userNameExists(s);
     }
+
 }

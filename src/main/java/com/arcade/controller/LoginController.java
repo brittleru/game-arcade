@@ -18,7 +18,6 @@ public class LoginController {
         return "auth/login-page";
     }
 
-
     @GetMapping("/access-denied")
     public String showAccessDenied() {
         return "security/access-denied";
