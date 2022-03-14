@@ -1,5 +1,9 @@
 package com.arcade.controller.rest;
 
+import com.arcade.dto.UserBasicInfoDto;
+import com.arcade.dto.UserDto;
+import com.arcade.dto.converter.UserBasicInfoConverter;
+import com.arcade.dto.converter.UserConverter;
 import com.arcade.entity.user.User;
 import com.arcade.exception.UserNotFoundException;
 import com.arcade.service.rest.AdminService;
@@ -13,24 +17,46 @@ import java.util.List;
 public class UsersController {
 
     private final AdminService adminService;
+    private final UserConverter userConverter;
+    private final UserBasicInfoConverter userBasicInfoConverter;
 
     @Autowired
-    public UsersController(AdminService adminService) {
+    public UsersController(AdminService adminService,
+                           UserConverter userConverter,
+                           UserBasicInfoConverter userBasicInfoConverter) {
         this.adminService = adminService;
+        this.userConverter = userConverter;
+        this.userBasicInfoConverter = userBasicInfoConverter;
     }
 
     @GetMapping("/users")
-    public List<User> getUserList() {
-        return adminService.findAllUsers();
+    public List<UserDto> getUserList() {
+        List<User> users = adminService.findAllUsers();
+        return userConverter.fromEntitiesToDtos(users);
+    }
+
+    @GetMapping("/users-basic-info")
+    public List<UserBasicInfoDto> getUserBasicInfoList() {
+        List<User> users = adminService.findAllUsers();
+        return userBasicInfoConverter.fromEntitiesToDtos(users);
     }
 
     @GetMapping("/users/{userId}")
-    public User getUserList(@PathVariable("userId") int id) {
+    public UserDto getUser(@PathVariable("userId") int id) {
         User user = adminService.findUserById(id);
         if (user == null) {
             throw new UserNotFoundException("User with ID of - " + id + " not found");
         }
-        return user;
+        return userConverter.fromEntityToDto(user);
+    }
+
+    @GetMapping("/users-basic-info/{userId}")
+    public UserBasicInfoDto getUserBasicInfo(@PathVariable("userId") int id) {
+        User user = adminService.findUserById(id);
+        if (user == null) {
+            throw new UserNotFoundException("User with ID of - " + id + " not found");
+        }
+        return userBasicInfoConverter.fromEntityToDto(user);
     }
 
     /**
@@ -38,16 +64,23 @@ public class UsersController {
      * This will force a save of a new item in database instead of update
      */
     @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
-        user.setId(0);
-        adminService.saveUser(user);
-        return user;
+    public UserDto addUser(@RequestBody UserDto userDto) {
+        userDto.setId(0);
+        User userEntity = userConverter.fromDtoToEntity(userDto);
+        adminService.saveUser(userEntity);
+
+        return userConverter.fromEntityToDto(userEntity);
     }
 
+
+    // TODO: problem when wanting to update and the user or the email it's the same
+    // TODO: as before
     @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        User user = userConverter.fromDtoToEntity(userDto);
         adminService.saveUser(user);
-        return user;
+
+        return userConverter.fromEntityToDto(user);
     }
 
     @DeleteMapping("/users/{userId}")

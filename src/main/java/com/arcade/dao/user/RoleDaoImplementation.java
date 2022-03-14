@@ -41,7 +41,7 @@ public class RoleDaoImplementation implements RoleDao {
             logger.warning(e.getMessage());
         }
 
-        logger.info("\n\n" + query.getSingleResult().toString() + "\n\n");
+        logger.info(query.getSingleResult().toString());
 
         return role;
 

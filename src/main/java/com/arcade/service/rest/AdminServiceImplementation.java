@@ -7,6 +7,7 @@ import com.arcade.entity.user.User;
 import com.arcade.exception.EmailTakenException;
 import com.arcade.exception.UsernameTakenException;
 import org.hibernate.Session;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @Service
@@ -77,15 +79,25 @@ public class AdminServiceImplementation implements AdminService {
             logger.info("No roles assigned for user " + user.getUsername() + ", assigning default role.");
             user.setRoles(List.of(roleDao.findRoleByName("ROLE_NORMAL")));
         }
+        if (user.getId() != 0) {
+            if (getUserByEmailIfDifferentById(user.getEmail(), user.getId()) != null) {
+                logAndThrowEmailTaken(user.getEmail());
+            }
+            else if (getUserByUsernameIfDifferentById(user.getUsername(), user.getId()) != null) {
+                logAndThrowUsernameTaken(user.getUsername());
+            }
+            session.saveOrUpdate(user);
+            return;
+        }
+
         if (userDao.emailExists(user.getEmail())) {
-            logger.warning("Email " + user.getEmail() + " already exists");
-            throw new EmailTakenException("Email taken");
+            logAndThrowEmailTaken(user.getEmail());
         }
         else if (userDao.usernameExists(user.getUsername())) {
-            logger.warning("Username " + user.getUsername() + " already exists");
-            throw new UsernameTakenException("Username taken");
+            logAndThrowUsernameTaken(user.getUsername());
         }
         session.saveOrUpdate(user);
+
     }
 
     @Override
@@ -101,6 +113,56 @@ public class AdminServiceImplementation implements AdminService {
     @Transactional
     public List<User> searchUserBy(String field) {
         return null;
+    }
+
+    @Override
+    @Transactional
+    public User getUserByUsernameIfDifferentById(String username, int id) {
+        Session session = entityManager.unwrap(Session.class);
+        Query<User> userNameExistsQuery = session
+                .createQuery("from User where id!=:tempId and username=:tempUsername", User.class);
+        userNameExistsQuery.setParameter("tempId", id);
+        userNameExistsQuery.setParameter("tempUsername", username);
+        User userWithUsername = null;
+        try {
+            userWithUsername = userNameExistsQuery.getSingleResult();
+        }
+        catch (Exception e) {
+            logger.warning("Can't find user with ID of " + id + " and Username of " + username);
+            logger.warning(e.getMessage());
+        }
+
+        return userWithUsername;
+    }
+
+    @Override
+    @Transactional
+    public User getUserByEmailIfDifferentById(String email, int id) {
+        Session session = entityManager.unwrap(Session.class);
+        Query<User> emailExistsQuery = session
+                .createQuery("from User where id!=:tempId and email=:tempEmail", User.class);
+        emailExistsQuery.setParameter("tempId", id);
+        emailExistsQuery.setParameter("tempEmail", email);
+        User userWithEmail = null;
+        try {
+            userWithEmail = emailExistsQuery.getSingleResult();
+        }
+        catch (Exception e) {
+            logger.warning("Can't find user with ID of " + id + " and Email of " + email);
+            logger.warning(e.getMessage());
+        }
+
+        return userWithEmail;
+    }
+
+    private void logAndThrowUsernameTaken(String username) {
+        logger.warning("Username " + username + " already exists");
+        throw new UsernameTakenException("Username taken");
+    }
+
+    private void logAndThrowEmailTaken(String email) {
+        logger.warning("Email " + email + " already exists");
+        throw new EmailTakenException("Email taken");
     }
 
 }

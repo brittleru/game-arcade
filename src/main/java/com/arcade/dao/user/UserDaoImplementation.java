@@ -32,7 +32,7 @@ public class UserDaoImplementation implements UserDao {
         try {
             user = query.getSingleResult();
         } catch (Exception e) {
-            logger.warning(e.getMessage());
+            logger.info(e.getMessage() + ". User with username: " + username + " not found.");
         }
         return user;
     }
@@ -59,7 +59,7 @@ public class UserDaoImplementation implements UserDao {
         try {
             user = query.getSingleResult();
         } catch (Exception e) {
-            logger.warning(e.getMessage());
+            logger.info(e.getMessage() + ". User with email " + email + " not found.");
         }
         return user != null;
     }

@@ -1,13 +1,12 @@
 package com.arcade.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class RoleDto extends BaseDto {
 
     private String name;
 
-    public RoleDto(String name) {
-        this.name = name;
-    }
-
+    @NotEmpty(message = "Name can't be empty")
     public String getName() {
         return name;
     }
@@ -23,4 +22,5 @@ public class RoleDto extends BaseDto {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }

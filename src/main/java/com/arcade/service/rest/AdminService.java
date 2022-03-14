@@ -16,4 +16,8 @@ public interface AdminService {
 
     public List<User> searchUserBy(String field);
 
+    public User getUserByUsernameIfDifferentById(String username, int id);
+
+    public User getUserByEmailIfDifferentById(String email, int id);
+
 }

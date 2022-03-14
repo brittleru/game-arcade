@@ -20,12 +20,7 @@ public class UsersRestExceptionHandler {
      */
     @ExceptionHandler
     public ResponseEntity<UserErrorResponse> handleException(UserNotFoundException e) {
-        UserErrorResponse errorResponse = new UserErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                e.getMessage(),
-                System.currentTimeMillis()
-        );
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return handleBaseException(e, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -35,12 +30,15 @@ public class UsersRestExceptionHandler {
      */
     @ExceptionHandler
     public ResponseEntity<UserErrorResponse> handleException(Exception e) {
+        return handleBaseException(e, HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<UserErrorResponse> handleBaseException(Exception e, HttpStatus httpStatus) {
         UserErrorResponse errorResponse = new UserErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
+                httpStatus.value(),
                 e.getMessage(),
                 System.currentTimeMillis()
         );
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, httpStatus);
     }
-
 }
