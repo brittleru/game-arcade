@@ -12,7 +12,7 @@ public interface AdminService {
 
     public void saveUser(User user);
 
-    public void deleteUserById(int id);
+    public User deleteUserById(int id);
 
     public List<User> searchUserBy(String field);
 

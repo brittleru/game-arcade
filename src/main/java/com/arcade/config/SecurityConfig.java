@@ -82,6 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/games/**").hasAnyAuthority("ROLE_NORMAL", "ROLE_ADMIN", "ROLE_SUPERUSER")
                 .antMatchers("/profile/**").hasAnyAuthority("ROLE_NORMAL", "ROLE_ADMIN", "ROLE_SUPERUSER")
+                .antMatchers("/admin/users-form*").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPERUSER")
+                .antMatchers("/admin/users/all*").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPERUSER")
+
 //                .antMatchers(HttpMethod.POST, "/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPERUSER")
 //                .antMatchers(HttpMethod.PUT, "/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPERUSER")
 //                .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("ROLE_ADMIN", "ROLE_SUPERUSER")

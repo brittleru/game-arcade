@@ -7,8 +7,6 @@ import javax.validation.constraints.Size;
 
 public class UserBasicInfoDto extends BaseDto {
 
-    // TODO: implement dto and converter for user details for admin and for user itself
-
     @NotNull(message = "Username can't be empty")
     @Size(min = 2, message = "Required")
     private String username;

@@ -1,0 +1,40 @@
+html, body {
+    /*background-color: #222222;*/
+}
+
+.main-content {
+    border: 1px solid #da0909;
+}
+
+.admin-panel {
+    border: 1px solid #418172;
+}
+
+.users-ui {
+    border: 1px solid #4a7226;
+}
+
+.users-list {
+    border: 1px solid #e58b00;
+}
+
+table.users-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: #000000;
+    border-style: solid;
+    color: #000000;
+}
+
+table.users-table td, table.users-table th {
+    border-width: 2px;
+    border-color: #000000;
+    border-style: solid;
+    padding: 3px;
+}
+
+table.users-table thead {
+    background-color: #139056;
+}

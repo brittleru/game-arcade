@@ -5,19 +5,17 @@ import com.arcade.dao.user.UserDao;
 import com.arcade.dao.user.UserDaoImplementation;
 import com.arcade.entity.user.User;
 import com.arcade.exception.EmailTakenException;
+import com.arcade.exception.UserNotFoundException;
 import com.arcade.exception.UsernameTakenException;
 import org.hibernate.Session;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 @Service
@@ -47,6 +45,7 @@ public class AdminServiceImplementation implements AdminService {
         Query<User> query = session.createQuery("from User order by id", User.class);
         if (query.getResultList() == null) {
             logger.info("No users found");
+            throw new UserNotFoundException("No users found.");
         }
         return query.getResultList();
     }
@@ -65,6 +64,9 @@ public class AdminServiceImplementation implements AdminService {
         catch (Exception e) {
             logger.warning("Can't find user with ID of " + id);
             logger.warning(e.getMessage());
+        }
+        if (user == null) {
+            throw new UserNotFoundException("User with ID of - " + id + " not found");
         }
 
         return user;
@@ -87,6 +89,7 @@ public class AdminServiceImplementation implements AdminService {
                 logAndThrowUsernameTaken(user.getUsername());
             }
             session.saveOrUpdate(user);
+            logger.info("Updated user " + user.getUsername());
             return;
         }
 
@@ -97,16 +100,22 @@ public class AdminServiceImplementation implements AdminService {
             logAndThrowUsernameTaken(user.getUsername());
         }
         session.saveOrUpdate(user);
-
+        logger.info("Added user " + user.getUsername());
     }
 
     @Override
     @Transactional
-    public void deleteUserById(int id) {
+    public User deleteUserById(int id) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createQuery("delete from User where id=:userId");
         query.setParameter("userId", id);
+        User user = findUserById(id);
+        if (user == null) {
+            throw new UserNotFoundException("User with ID of - " + id + " not found");
+        }
         query.executeUpdate();
+
+        return user;
     }
 
     @Override
