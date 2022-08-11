@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserConverter extends BaseConverter<UserDto, User> {
 
-    // TODO: this might need more refractoring because it would need a case for updating the user
+    // TODO: this might need more refactoring because it would need a case for updating the user
     // TODO: and one case to
-
-
 
     @Override
     public UserDto fromEntityToDto(User entity) {
@@ -30,19 +28,18 @@ public class UserConverter extends BaseConverter<UserDto, User> {
 
     @Override
     public User fromDtoToEntity(UserDto dto) {
-        User user = new User();
+        User user = new User.UserBuilder()
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .firstName(dto.getFirstName())
+                .lastName(dto.getLastName())
+                .email(dto.getEmail())
+                .createdAt(dto.getCreatedAt())
+                .updatedAt(dto.getUpdatedAt())
+                .roles(dto.getRoles())
+                .build();
         user.setId(dto.getId());
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setEmail(dto.getEmail());
-        user.setCreatedAt(dto.getCreatedAt());
-        user.setUpdatedAt(dto.getUpdatedAt());
-        user.setRoles(dto.getRoles());
 
         return user;
     }
-
-
 }

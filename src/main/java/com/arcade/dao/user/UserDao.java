@@ -4,12 +4,12 @@ import com.arcade.entity.user.User;
 
 public interface UserDao {
 
-    public User findByUsername(String username);
+    User findByUsername(String username);
 
-    public void save(User user);
+    void save(User user);
 
-    public boolean usernameExists(String username);
+    boolean usernameExists(String username);
 
-    public boolean emailExists(String email);
+    boolean emailExists(String email);
 
 }

@@ -4,7 +4,6 @@ import com.arcade.validation.EmailValid;
 import com.arcade.validation.FieldMatch;
 import com.arcade.validation.UniqueEmail;
 import com.arcade.validation.UniqueUsername;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -97,4 +96,5 @@ public class CheckedUser {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

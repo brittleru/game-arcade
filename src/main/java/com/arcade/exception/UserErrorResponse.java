@@ -11,8 +11,8 @@ public class UserErrorResponse {
     }
 
     /**
-     * @param status HTTP status value
-     * @param message Custom message (e.g., User with ID 5 not found)
+     * @param status    HTTP status value
+     * @param message   Custom message (e.g., User with ID 5 not found)
      * @param timeStamp Time in Epoch (nr. of seconds from midnight 1/1/1970 until now)
      */
     public UserErrorResponse(int status, String message, long timeStamp) {

@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface EndpointService {
 
-    public Map<String, String> getAllRestEndpoints();
+    Map<String, String> getAllRestEndpoints();
 
 }

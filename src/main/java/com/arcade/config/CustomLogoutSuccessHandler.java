@@ -1,7 +1,5 @@
 package com.arcade.config;
 
-import com.arcade.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
@@ -27,6 +25,5 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler im
         // TODO: maybe add a redirect to the page the user was before
         response.sendRedirect(request.getContextPath() + "/?logout");
     }
-
 
 }

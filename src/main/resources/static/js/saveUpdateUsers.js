@@ -18,12 +18,20 @@ const usersApiEndpoint = "/arcadeit/api/v1/users";
 
 function getRolesList() {
     let roles = [];
+    let defaultRole;
     const inputs = document.querySelectorAll("input[type='checkbox']");
     inputs.forEach(inputElement => {
         if (inputElement.checked) {
             roles.push(generateRoleJson(inputElement));
         }
+        if (trim("ROLE_".concat(inputElement.parentElement.innerText).toUpperCase()) === "ROLE_NORMAL") {
+            defaultRole = generateRoleJson(inputElement);
+        }
     });
+    if (!roles.length) {
+        roles.push(defaultRole);
+    }
+    console.log(roles);
     return roles;
 }
 
@@ -56,7 +64,6 @@ function saveOrUpdateUser() {
     }).catch(error => {
         console.log(error);
     });
-
 }
 
 // TODO: trim all the spaces from java, backend side

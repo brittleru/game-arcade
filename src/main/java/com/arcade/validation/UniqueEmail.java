@@ -10,10 +10,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface UniqueEmail {
 
-    public String message() default " address already exists";
+    String message() default " address already exists";
 
-    public Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-    public Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
 }

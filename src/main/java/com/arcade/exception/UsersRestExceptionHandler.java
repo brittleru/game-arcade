@@ -15,6 +15,7 @@ public class UsersRestExceptionHandler {
 
     /**
      * This handler will catch only if a value for ID that isn't in the database is passed to the request
+     *
      * @param e Custom exception instance
      * @return A response with a 404 (not found) status
      */
@@ -25,6 +26,7 @@ public class UsersRestExceptionHandler {
 
     /**
      * This handler will catch every error (e.g., "testId" string inserted instead of an int value)
+     *
      * @param e Custom exception instance
      * @return A response with a 400 (bad request) status
      */

@@ -6,18 +6,18 @@ import java.util.List;
 
 public interface AdminService {
 
-    public List<User> findAllUsers();
+    List<User> findAllUsers();
 
-    public User findUserById(int id);
+    User findUserById(int id);
 
-    public void saveUser(User user);
+    void saveUser(User user);
 
-    public User deleteUserById(int id);
+    User deleteUserById(int id);
 
-    public List<User> searchUserBy(String field);
+    List<User> searchUserBy(String field);
 
-    public User getUserByUsernameIfDifferentById(String username, int id);
+    User getUserByUsernameIfDifferentById(String username, int id);
 
-    public User getUserByEmailIfDifferentById(String email, int id);
+    User getUserByEmailIfDifferentById(String email, int id);
 
 }

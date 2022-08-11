@@ -41,6 +41,7 @@ public class UserServiceImplementation implements UserService {
         return userDao.findByUsername(username);
     }
 
+    // TODO: change every set with builder
     @Override
     @Transactional
     public void save(CheckedUser checkedUser) {

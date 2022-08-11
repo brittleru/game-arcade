@@ -2,7 +2,9 @@ package com.arcade.entity.user;
 
 import com.arcade.entity.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")

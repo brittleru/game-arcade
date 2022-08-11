@@ -10,12 +10,14 @@ import java.util.stream.Collectors;
 
 /**
  * Superclass for converting a DTO to Entity and vice-versa
+ *
  * @param <DTO>
  * @param <Entity>
  */
 public abstract class BaseConverter<DTO extends BaseDto, Entity extends BaseEntity> {
 
     public abstract DTO fromEntityToDto(Entity entity);
+
     public abstract Entity fromDtoToEntity(DTO dto);
 
     public List<DTO> fromEntitiesToDtos(List<Entity> entities) {

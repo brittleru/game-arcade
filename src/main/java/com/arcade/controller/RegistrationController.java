@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class RegistrationController {
 
     private final static Logger logger = Logger.getLogger(RegistrationController.class.getName());
-
+    private final static String AUTH_FORM_HTML = "auth/register-form";
     private final UserService userService;
 
     @Autowired
@@ -44,9 +44,10 @@ public class RegistrationController {
             return "redirect:/";
         }
         model.addAttribute("newUser", new CheckedUser());
-        return "auth/register-form";
+        return AUTH_FORM_HTML;
     }
 
+    // TODO: too much logic in controller
     @PostMapping("/process-register")
     public String processRegister(
             @Valid @ModelAttribute("newUser") CheckedUser checkedUser,
@@ -57,15 +58,14 @@ public class RegistrationController {
         logger.info("Processing registration form for: " + userName);
 
         if (bindingResult.hasErrors()) {
-            return "auth/register-form";
+            return AUTH_FORM_HTML;
         }
 
         User existing = null;
 
         try {
             existing = userService.findByUsername(userName);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.warning(e.getMessage());
         }
 
@@ -73,7 +73,7 @@ public class RegistrationController {
             model.addAttribute("newUser", new CheckedUser());
             model.addAttribute("registrationError", "User name already exists.");
             logger.warning("Sorry username: " + userName + " already exists.");
-            return "auth/register-form";
+            return AUTH_FORM_HTML;
         }
 
         userService.save(checkedUser);

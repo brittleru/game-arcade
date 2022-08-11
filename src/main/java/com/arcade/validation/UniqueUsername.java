@@ -11,10 +11,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface UniqueUsername {
 
-    public String message() default " already exists";
+    String message() default " already exists";
 
-    public Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-    public Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
 }

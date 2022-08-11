@@ -86,6 +86,17 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
+    public User(UserBuilder userBuilder) {
+        this.username = userBuilder.username;
+        this.password = userBuilder.password;
+        this.firstName = userBuilder.firstName;
+        this.lastName = userBuilder.lastName;
+        this.email = userBuilder.email;
+        this.createdAt = userBuilder.createdAt;
+        this.updatedAt = userBuilder.updatedAt;
+        this.roles = userBuilder.roles;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -148,6 +159,70 @@ public class User extends BaseEntity {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public static class UserBuilder {
+
+        private String username;
+        private String password;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Date createdAt;
+        private Date updatedAt;
+        private Collection<Role> roles;
+
+        public UserBuilder() {
+        }
+
+        public UserBuilder(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+
+        public UserBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder createdAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public UserBuilder updatedAt(Date updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public UserBuilder roles(Collection<Role> roles) {
+            this.roles = roles;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 
     @Override

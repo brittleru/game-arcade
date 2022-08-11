@@ -1,12 +1,9 @@
 package com.arcade.dao.user;
 
 import com.arcade.entity.user.Role;
-import com.arcade.entity.user.User;
-import org.apache.juli.logging.Log;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -26,7 +23,6 @@ public class RoleDaoImplementation implements RoleDao {
 
     @Override
     public Role findRoleByName(String roleName) {
-
         Session session = entityManager.unwrap(Session.class);
 
         Query<Role> query = session.createQuery("from Role where name=:roleName", Role.class);
@@ -36,15 +32,13 @@ public class RoleDaoImplementation implements RoleDao {
 
         try {
             role = query.getSingleResult();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.warning(e.getMessage());
         }
 
         logger.info(query.getSingleResult().toString());
 
         return role;
-
     }
 
 }

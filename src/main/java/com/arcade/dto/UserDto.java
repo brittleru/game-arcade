@@ -2,8 +2,6 @@ package com.arcade.dto;
 
 import com.arcade.entity.user.Role;
 import com.arcade.validation.EmailValid;
-import com.arcade.validation.UniqueEmail;
-import com.arcade.validation.UniqueUsername;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

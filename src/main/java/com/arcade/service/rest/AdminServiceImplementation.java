@@ -60,8 +60,7 @@ public class AdminServiceImplementation implements AdminService {
         User user = null;
         try {
             user = query.getSingleResult();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.warning("Can't find user with ID of " + id);
             logger.warning(e.getMessage());
         }
@@ -84,8 +83,7 @@ public class AdminServiceImplementation implements AdminService {
         if (user.getId() != 0) {
             if (getUserByEmailIfDifferentById(user.getEmail(), user.getId()) != null) {
                 logAndThrowEmailTaken(user.getEmail());
-            }
-            else if (getUserByUsernameIfDifferentById(user.getUsername(), user.getId()) != null) {
+            } else if (getUserByUsernameIfDifferentById(user.getUsername(), user.getId()) != null) {
                 logAndThrowUsernameTaken(user.getUsername());
             }
             session.saveOrUpdate(user);
@@ -95,8 +93,7 @@ public class AdminServiceImplementation implements AdminService {
 
         if (userDao.emailExists(user.getEmail())) {
             logAndThrowEmailTaken(user.getEmail());
-        }
-        else if (userDao.usernameExists(user.getUsername())) {
+        } else if (userDao.usernameExists(user.getUsername())) {
             logAndThrowUsernameTaken(user.getUsername());
         }
         session.saveOrUpdate(user);
@@ -135,8 +132,7 @@ public class AdminServiceImplementation implements AdminService {
         User userWithUsername = null;
         try {
             userWithUsername = userNameExistsQuery.getSingleResult();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.warning("Can't find user with ID of " + id + " and Username of " + username);
             logger.warning(e.getMessage());
         }
@@ -155,8 +151,7 @@ public class AdminServiceImplementation implements AdminService {
         User userWithEmail = null;
         try {
             userWithEmail = emailExistsQuery.getSingleResult();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.warning("Can't find user with ID of " + id + " and Email of " + email);
             logger.warning(e.getMessage());
         }

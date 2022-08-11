@@ -60,7 +60,7 @@
 
                     <div th:if="${#fields.hasErrors('userName')}" style="margin-bottom: 25px" class="text-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}"/>
+                            <li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}"></li>
                         </ul>
                     </div>
 
@@ -74,7 +74,7 @@
                     <div th:if="${#fields.hasErrors('password')}"
                          style="margin-bottom: 25px" class="text-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}"/>
+                            <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}"></li>
                         </ul>
                     </div>
 
@@ -87,7 +87,7 @@
                     <div th:if="${#fields.hasErrors('matchingPassword')}"
                          style="margin-bottom: 25px" class="text-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('matchingPassword')}" th:text="'Password ' + ${err}"/>
+                            <li th:each="err : ${#fields.errors('matchingPassword')}" th:text="'Password ' + ${err}"></li>
                         </ul>
                     </div>
 
@@ -101,7 +101,7 @@
                     <div th:if="${#fields.hasErrors('firstName')}"
                          style="margin-bottom: 25px" class="text-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('firstName')}" th:text="'First name ' + ${err}"/>
+                            <li th:each="err : ${#fields.errors('firstName')}" th:text="'First name ' + ${err}"></li>
                         </ul>
                     </div>
 
@@ -114,7 +114,7 @@
                     <div th:if="${#fields.hasErrors('lastName')}"
                          style="margin-bottom: 25px" class="text-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('lastName')}" th:text="'Last name ' + ${err}"/>
+                            <li th:each="err : ${#fields.errors('lastName')}" th:text="'Last name ' + ${err}"></li>
                         </ul>
                     </div>
 
@@ -126,7 +126,7 @@
                     </div>
                     <div th:if="${#fields.hasErrors('email')}" style="margin-bottom: 25px" class="text-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}"/>
+                            <li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}"></li>
                         </ul>
                     </div>
 
