@@ -14,11 +14,10 @@
 
         <div class="users-ui">
 
-            <button class="users-button">Test Button</button>
-
             <div class="" sec:authorize="hasAnyRole('ROLE_SUPERUSER', 'ROLE_ADMIN')">
-                <a th:href="@{/admin/users-form}" class="">Add User</a>
+                <button class="users-button"><a th:href="@{/admin/users-form}" class="">Add User</a></button>
             </div>
+
         </div>
 
         <div class="users-list">

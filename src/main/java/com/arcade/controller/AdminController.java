@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,6 +23,8 @@ public class AdminController {
     private static final Logger logger = Logger.getLogger(AdminController.class.getName());
 
     private static final String USERS_FORM_HTML = "admin/users-form";
+    private static final String USER_MODEL_VALUE = "user";
+    private static final String ALL_ROLES_MODEL_VALUE = "allRoles";
 
     private final AdminService adminService;
     private final RoleService roleService;
@@ -43,9 +42,9 @@ public class AdminController {
 
     @GetMapping("/users-form")
     public String getUsersForm(Model model) {
-        model.addAttribute("user", new CheckedUserForAdmin());
         List<Role> roles = roleService.findAllRoles();
-        model.addAttribute("allRoles", roles);
+        model.addAttribute(USER_MODEL_VALUE, new CheckedUserForAdmin());
+        model.addAttribute(ALL_ROLES_MODEL_VALUE, roles);
 
         return USERS_FORM_HTML;
     }
@@ -77,15 +76,37 @@ public class AdminController {
             String userOrEmail = existingUserName != null ? " username: " + userName :
                     (existingUserEmail != null ? " email: " + email : "test");
             logger.warning("Sorry" + userOrEmail + " already exits");
-            model.addAttribute("allRoles", roles);
+            model.addAttribute(ALL_ROLES_MODEL_VALUE, roles);
             return USERS_FORM_HTML;
         }
 
-
         logger.info("Successfully added user from admin panel: " + userName);
 
-
         return "redirect:/admin/users/all";
+    }
+
+    // TODO: check this functionality to be optimized (e.g., check for passwords if you change them to be hashed in DB,
+    // TODO: check validations.
+    @GetMapping("/user/update/{userId}")
+    public String updateUser(@PathVariable("userId") int userId, Model model) {
+        User user = adminService.findUserById(userId);
+        // TODO: refactor this with builder...
+        CheckedUserForAdmin checkedUserForAdmin = new CheckedUserForAdmin();
+        checkedUserForAdmin.setId(user.getId());
+        checkedUserForAdmin.setUserName(user.getUsername());
+        checkedUserForAdmin.setPassword(user.getPassword());
+        checkedUserForAdmin.setMatchingPassword(user.getPassword());
+        checkedUserForAdmin.setEmail(user.getEmail());
+        checkedUserForAdmin.setFirstName(user.getFirstName());
+        checkedUserForAdmin.setLastName(user.getLastName());
+        checkedUserForAdmin.setRoles(user.getRoles());
+
+        List<Role> roles = roleService.findAllRoles();
+
+        model.addAttribute(USER_MODEL_VALUE, checkedUserForAdmin);
+        model.addAttribute(ALL_ROLES_MODEL_VALUE, roles);
+
+        return USERS_FORM_HTML;
     }
 
     // TODO: extract this into an helper class
