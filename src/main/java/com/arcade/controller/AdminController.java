@@ -6,6 +6,7 @@ import com.arcade.service.rest.AdminService;
 import com.arcade.service.user.RoleService;
 import com.arcade.validateentity.CheckedUser;
 import com.arcade.validateentity.CheckedUserForAdmin;
+import com.arcade.validateentity.CheckedUserForUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @Controller
@@ -70,17 +72,17 @@ public class AdminController {
         User existingUserName = userExistingHelper(adminService.getUserByUsernameIfDifferentById(userName, user.getId()));
         User existingUserEmail = userExistingHelper(adminService.getUserByEmailIfDifferentById(email, user.getId()));
 
-        if (existingUserName != null || existingUserEmail != null) {
+        if (Objects.nonNull(existingUserName) || Objects.nonNull(existingUserEmail)) {
             model.addAttribute("newUser", new CheckedUser());
             model.addAttribute("registrationError");
-            String userOrEmail = existingUserName != null ? " username: " + userName :
-                    (existingUserEmail != null ? " email: " + email : "test");
-            logger.warning("Sorry" + userOrEmail + " already exits");
+            String usernameExists = Objects.nonNull(existingUserName) ? " username: " + userName : "";
+            String emailExists = Objects.nonNull(existingUserEmail) ? " email: " + email : "";
+            logger.warning("Sorry" + usernameExists + ", " + emailExists + " already exits");
             model.addAttribute(ALL_ROLES_MODEL_VALUE, roles);
             return USERS_FORM_HTML;
         }
 
-        logger.info("Successfully added user from admin panel: " + userName);
+        logger.info("Redirecting and trying to add user from admin panel: " + userName);
 
         return "redirect:/admin/users/all";
     }
@@ -91,20 +93,22 @@ public class AdminController {
     public String updateUser(@PathVariable("userId") int userId, Model model) {
         User user = adminService.findUserById(userId);
         // TODO: refactor this with builder...
-        CheckedUserForAdmin checkedUserForAdmin = new CheckedUserForAdmin();
-        checkedUserForAdmin.setId(user.getId());
-        checkedUserForAdmin.setUserName(user.getUsername());
-        checkedUserForAdmin.setPassword(user.getPassword());
-        checkedUserForAdmin.setMatchingPassword(user.getPassword());
-        checkedUserForAdmin.setEmail(user.getEmail());
-        checkedUserForAdmin.setFirstName(user.getFirstName());
-        checkedUserForAdmin.setLastName(user.getLastName());
-        checkedUserForAdmin.setRoles(user.getRoles());
+        CheckedUserForUpdate checkedUserForUpdate = new CheckedUserForUpdate();
+        checkedUserForUpdate.setId(user.getId());
+        checkedUserForUpdate.setUserName(user.getUsername());
+        checkedUserForUpdate.setPassword(user.getPassword());
+        checkedUserForUpdate.setMatchingPassword(user.getPassword());
+        checkedUserForUpdate.setEmail(user.getEmail());
+        checkedUserForUpdate.setFirstName(user.getFirstName());
+        checkedUserForUpdate.setLastName(user.getLastName());
+        checkedUserForUpdate.setCreatedAt(user.getCreatedAt());
+        checkedUserForUpdate.setRoles(user.getRoles());
 
         List<Role> roles = roleService.findAllRoles();
 
-        model.addAttribute(USER_MODEL_VALUE, checkedUserForAdmin);
+        model.addAttribute(USER_MODEL_VALUE, checkedUserForUpdate);
         model.addAttribute(ALL_ROLES_MODEL_VALUE, roles);
+        logger.info("DATE OF USER: " + user.getCreatedAt());
 
         return USERS_FORM_HTML;
     }

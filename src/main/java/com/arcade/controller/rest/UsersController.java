@@ -68,10 +68,10 @@ public class UsersController {
 
     @PutMapping("/users")
     public UserDto updateUser(@Valid @RequestBody UserDto userDto) {
-        User user = userConverter.fromDtoToEntity(userDto);
-        adminService.saveUser(user);
+        User userEntity = userConverter.fromDtoToEntity(userDto);
+        adminService.saveUser(userEntity);
 
-        return userConverter.fromEntityToDto(user);
+        return userConverter.fromEntityToDto(userEntity);
     }
 
     @DeleteMapping("/users/{userId}")

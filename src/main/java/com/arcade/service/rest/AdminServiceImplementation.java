@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.logging.Logger;
 

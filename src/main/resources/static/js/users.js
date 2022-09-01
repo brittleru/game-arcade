@@ -21,7 +21,29 @@ function fetchUsersApi() {
             let id = 0;
             Object.keys(value).map(key => {
                 let td = document.createElement("td");
-                td.innerHTML = `${value[key]}`;
+                let rolesString = "";
+                if (value["roles"] === value[key]) {
+                    value[key].forEach(element => {
+                        let tempRole = element["name"].replace("ROLE_", "");
+                        rolesString += `${capitalize(tempRole)} <br>`;
+                    });
+                    td.innerHTML = rolesString;
+                }
+                else if (value["password"] === value[key]) {
+                    td.innerHTML = "PROTECTED";
+                }
+                else if (value["createdAt"] === value[key] || value["updatedAt"] === value[key]) {
+                    if (value[key]) {
+                        td.innerHTML = `${new Date(value[key])}`;
+                    }
+                    else {
+                        td.innerHTML = "invalid";
+                    }
+
+                }
+                else {
+                    td.innerHTML = `${value[key]}`;
+                }
                 id = value["id"];
                 tr.appendChild(td);
             });
@@ -35,6 +57,16 @@ function fetchUsersApi() {
     }).catch(error => {
         console.log(error);
     });
+}
+
+/**
+ * Helper function to capitalize the given string. (e.g., transform string: "test" in "Test")
+ * @param string The given string, doesn't matter if the letters are upper or lower cased.
+ * @returns {string} The given string in capitalized form.
+ */
+function capitalize(string) {
+    string = string.toLowerCase();
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function fetchUsersBasicApi() {

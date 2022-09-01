@@ -15,6 +15,7 @@ const emailInput = document.getElementById("email");
  * Rest API endpoints
  */
 const usersApiEndpoint = "/arcadeit/api/v1/users";
+const getUserByIdApiEndpoint = "/arcadeit/api/v1/users/";
 
 function getRolesList() {
     let roles = [];
@@ -47,16 +48,56 @@ function generateJsonForUser() {
     };
 }
 
-function saveOrUpdateUser() {
+async function getUserById(id) {
+    const endpoint = `${getUserByIdApiEndpoint}${id}`;
+    let user;
+
+    await fetch(endpoint).then(response => {
+        return response.json();
+    }).then(data => {
+        console.log(data);
+        console.log(typeof data);
+        user = JSON.parse(JSON.stringify(data));
+    }).catch(error => {
+        console.log(error);
+    });
+    let userInput = generateJsonForUser();
+    user.username = userInput.username;
+    user.password = userInput.password;
+    user.firstName = userInput.firstName;
+    user.lastName = userInput.lastName;
+    user.email = userInput.email;
+    user.roles = getRolesList();
+    delete user.updatedAt;
+
+    return user;
+}
+
+async function saveOrUpdateUser() {
     let userData = generateJsonForUser();
-    console.log(userData);
-    fetch(usersApiEndpoint, {
-        method: "POST",
+    let httpMethod;
+    let bodyToPost;
+
+    if (userData.id === "0") {
+        console.log("Add user");
+        httpMethod = "POST";
+        bodyToPost = JSON.stringify(userData);
+    }
+    else {
+        console.log("Update user");
+        httpMethod = "PUT";
+        await getUserById(userData.id).then(fetchedUser => {
+            bodyToPost = JSON.stringify(fetchedUser);
+        });
+    }
+
+    await fetch(usersApiEndpoint, {
+        method: httpMethod,
         headers: {
             "Accept": "*/*",
             "Content-type": "application/json"
         },
-        body: JSON.stringify(userData)
+        body: bodyToPost
     }).then(response => {
         return response.json();
     }).then(data => {
