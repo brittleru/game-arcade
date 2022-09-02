@@ -48,10 +48,11 @@ function fetchUsersApi() {
             });
             let actionTdElement = document.createElement("td");
             // TODO: add style for this and change href
-            actionTdElement.innerHTML = `<button class="update-user-button"><a href="${updateUserEndpoint + "/" + id}" class="">Update</a></button>
-                                         <button class="delete-user-button"><a href="${deleteUserEndpoint + "/" + id}" class=""
-                                            onclick="if (!confirm('Are you sure you want to delete this user with ID: ${id}')) return false"
-                                         >Delete</a></button>`;
+            actionTdElement.innerHTML = `<a href="${updateUserEndpoint + "/" + id}" class="btn btn-info">Update</a>
+                                         <a href="${deleteUserEndpoint + "/" + id}" class="btn btn-danger" 
+                                            onclick="if (!confirm('Are you sure you want to delete this user with ID: ${id}')) return false">
+                                                Delete
+                                         </a>`;
             tr.appendChild(actionTdElement);
             usersTableBody.appendChild(tr);
         });

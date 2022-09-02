@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Games</title>
+    <th:block th:insert="fragments/base.html :: headerfiles"></th:block>
 </head>
 <body>
+    <header th:replace="fragments/base.html :: header"></header>
+
 
     <div th:each="game : ${games}">
         <h1 th:text="${game}"></h1>
     </div>
+    <a th:href="@{/games/rocket-science}" class="btn btn-info">Play</a>
 
-    <a th:href="@{/profile/user}">Profile</a>
+    <br><br><br>
 
+    <a th:href="@{/profile/user}" class="btn btn-secondary">Profile</a>
+
+    <footer th:replace="fragments/base.html :: footer"></footer>
 </body>
 </html>

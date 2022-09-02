@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  
-  <title>Title</title>
+    <title th:text="${#authentication.getPrincipal().getUsername()} + ' profile'"></title>
+    <th:block th:insert="fragments/base.html :: headerfiles"></th:block>
 </head>
 
 <body>
+    <header th:replace="fragments/base.html :: header"></header>
 
-  <div>
-    User: <span sec:authentication="name"></span>
+    <div>
+        User: <span sec:authentication="name"></span>
+        <br>
+        Role(s): <span sec:authentication="principal.authorities"></span>
+        <br><br>
+    </div>
     <br>
-    Role(s): <span sec:authentication="principal.authorities"></span>
-    <br><br>
-  </div>
-  <br>
 
-  <h1 th:text="${userName}"></h1>
+    <h1 th:text="${userName}"></h1>
 
-  <a th:href="@{/games/list}">Games</a>
+    <a th:href="@{/games/list}">Games</a>
+
+    <footer th:replace="fragments/base.html :: footer"></footer>
+
 </body>
 
 </html>
