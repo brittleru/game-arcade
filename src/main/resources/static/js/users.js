@@ -10,7 +10,8 @@ const usersTableBody = document.getElementById("users-table-body");
 const endpointsApiEndpoint = "/arcadeit/api/v1/endpoints";
 const usersApiEndpoint = "/arcadeit/api/v1/users";
 const usersBasicInfoApiEndpoint = "/arcadeit/api/v1/users-basic-info";
-const updateUserEndpoint = "/arcadeit/admin/user/update"
+const updateUserEndpoint = "/arcadeit/admin/user/update";
+const deleteUserEndpoint = "/arcadeit/admin/user/delete";
 
 function fetchUsersApi() {
     fetch(usersApiEndpoint).then(response => {
@@ -22,27 +23,25 @@ function fetchUsersApi() {
             Object.keys(value).map(key => {
                 let td = document.createElement("td");
                 let rolesString = "";
-                if (value["roles"] === value[key]) {
-                    value[key].forEach(element => {
-                        let tempRole = element["name"].replace("ROLE_", "");
-                        rolesString += `${capitalize(tempRole)} <br>`;
-                    });
-                    td.innerHTML = rolesString;
-                }
-                else if (value["password"] === value[key]) {
-                    td.innerHTML = "PROTECTED";
-                }
-                else if (value["createdAt"] === value[key] || value["updatedAt"] === value[key]) {
-                    if (value[key]) {
-                        td.innerHTML = `${new Date(value[key])}`;
-                    }
-                    else {
-                        td.innerHTML = "invalid";
-                    }
-
-                }
-                else {
-                    td.innerHTML = `${value[key]}`;
+                switch (value[key]) {
+                    case value["roles"]:
+                        value[key].forEach(element => {
+                            let tempRole = element["name"].replace("ROLE_", "");
+                            rolesString += `${capitalize(tempRole)} <br>`;
+                        });
+                        td.innerHTML = rolesString;
+                        break;
+                    case value["password"]:
+                        td.innerHTML = "PROTECTED";
+                        break;
+                    case value["createdAt"]:
+                        td.innerHTML = value[key] ? `${new Date(value[key])}` : "invalid";
+                        break;
+                    case value["updatedAt"]:
+                        td.innerHTML = value[key] ? `${new Date(value[key])}` : "invalid";
+                        break;
+                    default:
+                        td.innerHTML = `${value[key]}`;
                 }
                 id = value["id"];
                 tr.appendChild(td);
@@ -50,7 +49,9 @@ function fetchUsersApi() {
             let actionTdElement = document.createElement("td");
             // TODO: add style for this and change href
             actionTdElement.innerHTML = `<button class="update-user-button"><a href="${updateUserEndpoint + "/" + id}" class="">Update</a></button>
-                                         <button class="delete-user-button"><a th:href="@{/admin/users-form}" class="">Delete</a></button>`;
+                                         <button class="delete-user-button"><a href="${deleteUserEndpoint + "/" + id}" class=""
+                                            onclick="if (!confirm('Are you sure you want to delete this user with ID: ${id}')) return false"
+                                         >Delete</a></button>`;
             tr.appendChild(actionTdElement);
             usersTableBody.appendChild(tr);
         });

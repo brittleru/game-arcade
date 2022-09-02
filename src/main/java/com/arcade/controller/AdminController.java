@@ -25,6 +25,7 @@ public class AdminController {
     private static final Logger logger = Logger.getLogger(AdminController.class.getName());
 
     private static final String USERS_FORM_HTML = "admin/users-form";
+    private static final String REDIRECT_TO_ALL_USERS_HTML = "redirect:/admin/users/all";
     private static final String USER_MODEL_VALUE = "user";
     private static final String ALL_ROLES_MODEL_VALUE = "allRoles";
 
@@ -84,11 +85,9 @@ public class AdminController {
 
         logger.info("Redirecting and trying to add user from admin panel: " + userName);
 
-        return "redirect:/admin/users/all";
+        return REDIRECT_TO_ALL_USERS_HTML;
     }
 
-    // TODO: check this functionality to be optimized (e.g., check for passwords if you change them to be hashed in DB,
-    // TODO: check validations.
     @GetMapping("/user/update/{userId}")
     public String updateUser(@PathVariable("userId") int userId, Model model) {
         User user = adminService.findUserById(userId);
@@ -108,12 +107,18 @@ public class AdminController {
 
         model.addAttribute(USER_MODEL_VALUE, checkedUserForUpdate);
         model.addAttribute(ALL_ROLES_MODEL_VALUE, roles);
-        logger.info("DATE OF USER: " + user.getCreatedAt());
 
         return USERS_FORM_HTML;
     }
 
-    // TODO: extract this into an helper class
+    @GetMapping("/user/delete/{userId}")
+    public String delete(@PathVariable("userId") int userId) {
+        User deletedUser = adminService.deleteUserById(userId);
+        logger.info("Deleted user: " + deletedUser.getUsername() + " with ID: " + userId);
+        return REDIRECT_TO_ALL_USERS_HTML;
+    }
+
+    // TODO: extract this into a helper class
     private static User userExistingHelper(User user) {
         User existing = null;
         try {

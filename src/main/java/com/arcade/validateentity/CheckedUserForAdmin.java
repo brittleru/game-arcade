@@ -1,12 +1,19 @@
 package com.arcade.validateentity;
 
 import com.arcade.entity.user.Role;
-import com.arcade.validation.EmailValid;
+import com.arcade.validation.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 
+@FieldMatch.List({
+        @FieldMatch(
+                first = "password",
+                second = "matchingPassword",
+                message = "The password fields must match."
+        )
+})
 public class CheckedUserForAdmin {
 
     private int id;
