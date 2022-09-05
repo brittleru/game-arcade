@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+  <title th:text="'Edit ' + ${userDto.getUsername()} + ' profile'"></title>
+  <th:block th:insert="fragments/base.html :: headerfiles"></th:block>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="fragments/base.html :: header"></header>
+
+<div>
+  <h3>Edit your profile</h3>
+
+</div>
+
+<footer th:replace="fragments/base.html :: footer"></footer>
+
+</body>
+
+</html>

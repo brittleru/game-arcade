@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 >
 <head>
-    <title th:text="${#authentication.getPrincipal().getUsername()} + ' profile'"></title>
+    <title th:text="${userDto.getUsername()} + ' profile'"></title>
     <th:block th:insert="fragments/base.html :: headerfiles"></th:block>
 </head>
 
@@ -11,16 +11,17 @@
     <header th:replace="fragments/base.html :: header"></header>
 
     <div>
-        User: <span sec:authentication="name"></span>
+        <br>
+        User: <span th:text="${userDto.getUsername()}"></span>
+        <br>
+        Full Name: <span th:text="${userDto.getLastName()} + ' ' + ${userDto.getFirstName()}"></span>
+        <br>
+        Email: <span th:text="${userDto.getEmail()}"></span>
         <br>
         Role(s): <span sec:authentication="principal.authorities"></span>
         <br><br>
+        <a th:href="@{/profile/edit}" class="btn btn-secondary">Edit Profile</a>
     </div>
-    <br>
-
-    <h1 th:text="${userName}"></h1>
-
-    <a th:href="@{/games/list}">Games</a>
 
     <footer th:replace="fragments/base.html :: footer"></footer>
 
