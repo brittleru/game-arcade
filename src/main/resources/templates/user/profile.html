@@ -18,9 +18,14 @@
         <br>
         Email: <span th:text="${userDto.getEmail()}"></span>
         <br>
-        Role(s): <span sec:authentication="principal.authorities"></span>
+        Role(s): <span th:text="${roles}"></span>
         <br><br>
-        <a th:href="@{/profile/edit}" class="btn btn-secondary">Edit Profile</a>
+        <div sec:authorize="isAuthenticated()" th:if="${userDto.getUsername() == #authentication.getName()}">
+            <a th:href="@{/profile/edit/{userName}(userName=${userDto.getUsername()})}" class="btn btn-secondary">Edit Profile</a>
+<!--            <form th:action="@{/logout-user}" method="POST">-->
+<!--                <input type="submit" value="Logout" class="btn btn-primary">-->
+<!--            </form>-->
+        </div>
     </div>
 
     <footer th:replace="fragments/base.html :: footer"></footer>

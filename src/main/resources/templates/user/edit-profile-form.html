@@ -12,6 +12,50 @@
 
 <div>
   <h3>Edit your profile</h3>
+  <hr>
+
+  <form id="edit-profile-form" class="container" th:action="@{/profile/user/save}" th:object="${userDto}" method="POST">
+
+<!--    <div class="form-group">-->
+<!--      <div class="col-xs-15">-->
+<!--        <div th:if="${registrationError}" class="alert alert-danger col-xs-offset-1 col-xs-10">-->
+<!--          <span th:text="${registrationError}"></span>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--    </div>-->
+    <div class="row">
+      <input id="user-id" type="hidden" th:field="*{id}">
+    </div>
+    <div class="row">
+      <label for="first-name">First name: </label>
+      <input id="first-name" type="text" th:field="*{firstName}" value="firstName" class="" placeholder="First Name">
+    </div>
+    <div th:if="${#fields.hasErrors('firstName')}"
+         style="margin-bottom: 25px" class="text-danger">
+      <ul>
+        <li th:each="err : ${#fields.errors('firstName')}" th:text="'First name ' + ${err}"></li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <label for="last-name">Last Name: </label>
+      <input id="last-name" type="text" th:field="*{lastName}" value="lastName" class="" placeholder="Last Name">
+    </div>
+    <div th:if="${#fields.hasErrors('lastName')}"
+         style="margin-bottom: 25px" class="text-danger">
+      <ul>
+        <li th:each="err : ${#fields.errors('lastName')}" th:text="'Last name ' + ${err}"></li>
+      </ul>
+    </div>
+
+    <br>
+    <div class="row">
+      <button type="submit" class="btn btn-info col col-sm-2" name="button">Save</button>
+    </div>
+
+
+  </form>
 
 </div>
 
