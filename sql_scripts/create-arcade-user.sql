@@ -1,4 +1,4 @@
-drop user arcadeadmin@localhost;
+drop user if exists arcadeadmin@localhost;
 
 flush privileges;
 
