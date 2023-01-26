@@ -25,8 +25,6 @@ public class ProfileController {
     private final UserConverter userConverter;
     private final UserBasicInfoConverter userBasicInfoConverter;
 
-    private final String profileImagesDir = System.getProperty("user.dir") + "src/main/resources/static/imgs/profile";
-
     @Autowired
     public ProfileController(UserService userService, UserConverter userConverter, UserBasicInfoConverter userBasicInfoConverter) {
         this.userService = userService;
@@ -52,11 +50,6 @@ public class ProfileController {
             roles.add(role.getName().toLowerCase().replace("role_", ""));
         }
         model.addAttribute("roles", roles);
-
-        if (user.getUserImage() == null) {
-            System.out.println("\n\nNU AM IMAGINE");
-
-        }
 
         return "user/profile";
     }
