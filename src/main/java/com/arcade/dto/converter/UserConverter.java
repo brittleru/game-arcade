@@ -22,6 +22,7 @@ public class UserConverter extends BaseConverter<UserDto, User> {
         userDto.setCreatedAt(entity.getCreatedAt());
         userDto.setUpdatedAt(entity.getUpdatedAt());
         userDto.setRoles(entity.getRoles());
+        // TODO: think about the user image ID behaviour
 
         return userDto;
     }
