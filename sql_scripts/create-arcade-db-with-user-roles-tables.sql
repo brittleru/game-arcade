@@ -133,10 +133,10 @@ CREATE TABLE `high_score`
     `id`         int(11)      NOT NULL AUTO_INCREMENT,
     `game`       varchar(255) NOT NULL,
     `score`      int          NOT NULL,
-    `username`   varchar(50)  NOT NULL,
+    `user_id`    int(11)      NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    foreign key (`username`) references user (`username`),
+    foreign key (`user_id`) references user (`id`),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1

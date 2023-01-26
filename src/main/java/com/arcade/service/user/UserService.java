@@ -8,6 +8,8 @@ public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
 
+    User findById(long id);
+
     void save(CheckedUser checkedUser);
 
     void updateNames(User user, String firstName, String lastName);

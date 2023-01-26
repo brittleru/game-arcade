@@ -8,7 +8,7 @@ public interface HighScoreService {
 
     List<HighScore> findAllHighScores();
 
-    List<HighScore> findHighScoresByUsername(String username);
+    List<HighScore> findHighScoresByUserId(long userId);
 
     HighScore findHighScoreById(long id);
 

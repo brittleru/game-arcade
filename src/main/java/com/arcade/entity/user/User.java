@@ -3,6 +3,7 @@ package com.arcade.entity.user;
 
 import com.arcade.entity.BaseEntity;
 import com.arcade.entity.HighScore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -43,6 +44,7 @@ public class User extends BaseEntity {
     private Date updatedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<HighScore> highScores;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -79,7 +79,6 @@ public class UsersController {
 
     @DeleteMapping("/users/{userId}")
     public String deleteUser(@PathVariable("userId") long id) {
-        System.out.println("IN DELETE USER");
         User user = adminService.deleteUserById(id);
 
         return "Deleted user: " + user.getUsername() + " with ID of " + id;

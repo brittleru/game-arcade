@@ -1,60 +1,25 @@
-package com.arcade.entity;
+package com.arcade.dto;
 
 import com.arcade.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Entity
-@Table(name = "high_score")
-public class HighScore extends BaseEntity {
+public class HighScoreDto extends BaseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "game")
+    @NotNull(message = "Game name can't be empty")
+    @Size(min = 2, message = "Required")
     private String game;
 
-    @Column(name = "score")
+    @NotNull(message = "Required")
     private long score;
-
-    @Column(name = "created_at")
-    @CreationTimestamp
     private Date createdAt;
-
-    @Column(name = "updated_at")
-    @UpdateTimestamp
     private Date updatedAt;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id",  nullable=false)
-    @JsonBackReference
     private User user;
-
-
-    public HighScore() {
-    }
-
-    public HighScore(long id, String game, long score, Date createdAt, Date updatedAt, User user) {
-        this.id = id;
-        this.game = game;
-        this.score = score;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.user = user;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getGame() {
         return game;
@@ -63,7 +28,6 @@ public class HighScore extends BaseEntity {
     public void setGame(String game) {
         this.game = game;
     }
-
 
     public long getScore() {
         return score;
@@ -99,8 +63,8 @@ public class HighScore extends BaseEntity {
 
     @Override
     public String toString() {
-        return "HighScore{" +
-                "id=" + id +
+        return "HighScoreDto{" +
+                "id=" + this.getId() +
                 ", game='" + game + '\'' +
                 ", score=" + score +
                 ", createdAt=" + createdAt +

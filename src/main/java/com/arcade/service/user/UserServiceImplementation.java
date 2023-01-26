@@ -41,6 +41,12 @@ public class UserServiceImplementation implements UserService {
         return userDao.findByUsername(username);
     }
 
+    @Override
+    @Transactional
+    public User findById(long id) {
+        return userDao.findById(id);
+    }
+
     // TODO: change every set with builder
     @Override
     @Transactional
