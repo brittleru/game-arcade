@@ -136,7 +136,7 @@ CREATE TABLE `high_score`
     `user_id`    int(11)      NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    foreign key (`user_id`) references user (`id`),
+    foreign key (`user_id`) references user (`id`) on delete cascade,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
