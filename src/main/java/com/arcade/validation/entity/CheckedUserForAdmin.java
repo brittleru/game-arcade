@@ -1,12 +1,12 @@
-package com.arcade.validateentity;
+package com.arcade.validation.entity;
 
+import com.arcade.entity.user.Role;
 import com.arcade.validation.EmailValid;
 import com.arcade.validation.FieldMatch;
-import com.arcade.validation.UniqueEmail;
-import com.arcade.validation.UniqueUsername;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 
 @FieldMatch.List({
         @FieldMatch(
@@ -15,11 +15,12 @@ import javax.validation.constraints.Size;
                 message = "The password fields must match."
         )
 })
-public class CheckedUser {
+public class CheckedUserForAdmin {
+
+    private long id;
 
     @NotNull(message = "Required")
     @Size(min = 2, message = "Required")
-    @UniqueUsername
     private String userName;
 
     @NotNull(message = "Required")
@@ -41,12 +42,29 @@ public class CheckedUser {
     @NotNull(message = "Required")
     @Size(min = 3, message = "Required")
     @EmailValid
-    @UniqueEmail
     private String email;
 
+    private Collection<Role> roles;
 
-    public CheckedUser() {
 
+    public CheckedUserForAdmin() {
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     public String getUserName() {
@@ -96,5 +114,4 @@ public class CheckedUser {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

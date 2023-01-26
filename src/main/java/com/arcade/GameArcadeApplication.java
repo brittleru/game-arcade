@@ -15,13 +15,17 @@ public class GameArcadeApplication {
     private static int serverPort;
     private static String serverContextPath;
     private static boolean isBrowserStart;
+    private static boolean isLocalHostRunning;
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(GameArcadeApplication.class, args);
-        String url = "http://localhost:" + String.valueOf(serverPort) + serverContextPath;
-        logger.info("Application started on: " + url);
-        if (isBrowserStart) {
-            openBrowser(url);
+
+        if (isLocalHostRunning) {
+            String url = "http://localhost:" + serverPort + serverContextPath;
+            logger.info("Application started on: " + url);
+            if (isBrowserStart) {
+                openBrowser(url);
+            }
         }
     }
 
@@ -43,5 +47,10 @@ public class GameArcadeApplication {
     @Value("${browser.start}")
     public void setIsBrowserStart(boolean browserStart) {
         isBrowserStart = browserStart;
+    }
+
+    @Value("${local.host.running}")
+    public void setIsLocalHostRunning(boolean localHostRunning) {
+        isLocalHostRunning = localHostRunning;
     }
 }

@@ -28,6 +28,10 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_image_id", referencedColumnName = "id")
+    private UserImage userImage;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private Date createdAt;
@@ -35,6 +39,7 @@ public class User extends BaseEntity {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Date updatedAt;
+
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -81,6 +86,18 @@ public class User extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.roles = roles;
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email, UserImage userImage, Date createdAt, Date updatedAt, Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userImage = userImage;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.roles = roles;
@@ -135,6 +152,14 @@ public class User extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserImage getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(UserImage userImage) {
+        this.userImage = userImage;
     }
 
     public Date getCreatedAt() {

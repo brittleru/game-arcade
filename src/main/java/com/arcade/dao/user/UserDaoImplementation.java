@@ -21,6 +21,7 @@ public class UserDaoImplementation implements UserDao {
         this.entityManager = entityManager;
     }
 
+    // TODO: use a hibernate session factory
     @Override
     public User findByUsername(String username) {
         Session session = entityManager.unwrap(Session.class);
@@ -42,6 +43,7 @@ public class UserDaoImplementation implements UserDao {
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(user);
     }
+
 
     @Override
     public boolean usernameExists(String username) {

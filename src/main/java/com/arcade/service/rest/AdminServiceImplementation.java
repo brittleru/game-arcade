@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.time.DayOfWeek;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -53,7 +52,7 @@ public class AdminServiceImplementation implements AdminService {
 
     @Override
     @Transactional
-    public User findUserById(int id) {
+    public User findUserById(long id) {
         Session session = entityManager.unwrap(Session.class);
         Query<User> query = session.createQuery("from User where id=:tempId", User.class);
         query.setParameter("tempId", id);
@@ -67,6 +66,27 @@ public class AdminServiceImplementation implements AdminService {
         }
         if (user == null) {
             throw new UserNotFoundException("User with ID of - " + id + " not found");
+        }
+
+        return user;
+    }
+
+    @Override
+    @Transactional
+    public User findUserByUsername(String username) {
+        Session session = entityManager.unwrap(Session.class);
+        Query<User> query = session.createQuery("from User where username=:tempUsername", User.class);
+        query.setParameter("tempUsername", username);
+
+        User user = null;
+        try {
+            user = query.getSingleResult();
+        } catch (Exception e) {
+            logger.warning("Can't find user with username of " + username);
+            logger.warning(e.getMessage());
+        }
+        if (user == null) {
+            throw new UserNotFoundException("User with username of - " + username + " not found");
         }
 
         return user;
@@ -103,7 +123,7 @@ public class AdminServiceImplementation implements AdminService {
 
     @Override
     @Transactional
-    public User deleteUserById(int id) {
+    public User deleteUserById(long id) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createQuery("delete from User where id=:userId");
         query.setParameter("userId", id);
@@ -124,7 +144,7 @@ public class AdminServiceImplementation implements AdminService {
 
     @Override
     @Transactional
-    public User getUserByUsernameIfDifferentById(String username, int id) {
+    public User getUserByUsernameIfDifferentById(String username, long id) {
         Session session = entityManager.unwrap(Session.class);
         Query<User> userNameExistsQuery = session
                 .createQuery("from User where id!=:tempId and username=:tempUsername", User.class);
@@ -143,7 +163,7 @@ public class AdminServiceImplementation implements AdminService {
 
     @Override
     @Transactional
-    public User getUserByEmailIfDifferentById(String email, int id) {
+    public User getUserByEmailIfDifferentById(String email, long id) {
         Session session = entityManager.unwrap(Session.class);
         Query<User> emailExistsQuery = session
                 .createQuery("from User where id!=:tempId and email=:tempEmail", User.class);

@@ -7,10 +7,13 @@ import com.arcade.dto.converter.UserConverter;
 import com.arcade.entity.user.User;
 import com.arcade.service.rest.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -42,13 +45,13 @@ public class UsersController {
     }
 
     @GetMapping("/users/{userId}")
-    public UserDto getUser(@PathVariable("userId") int id) {
+    public UserDto getUser(@PathVariable("userId") long id) {
         User user = adminService.findUserById(id);
         return userConverter.fromEntityToDto(user);
     }
 
     @GetMapping("/users-basic-info/{userId}")
-    public UserBasicInfoDto getUserBasicInfo(@PathVariable("userId") int id) {
+    public UserBasicInfoDto getUserBasicInfo(@PathVariable("userId") long id) {
         User user = adminService.findUserById(id);
         return userBasicInfoConverter.fromEntityToDto(user);
     }
@@ -75,11 +78,21 @@ public class UsersController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public String deleteUser(@PathVariable("userId") int id) {
+    public String deleteUser(@PathVariable("userId") long id) {
         System.out.println("IN DELETE USER");
         User user = adminService.deleteUserById(id);
 
         return "Deleted user: " + user.getUsername() + " with ID of " + id;
+    }
+
+    @GetMapping("/user/authenticated")
+    public String getAuthenticatedUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (Objects.nonNull(authentication.getName())) {
+            return authentication.getName();
+        }
+
+        return "User not authenticated.";
     }
 
 }

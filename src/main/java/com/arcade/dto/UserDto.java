@@ -1,6 +1,7 @@
 package com.arcade.dto;
 
 import com.arcade.entity.user.Role;
+import com.arcade.entity.user.UserImage;
 import com.arcade.validation.EmailValid;
 
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,8 @@ public class UserDto extends BaseDto {
     @Size(min = 3, message = "Required")
     @EmailValid
     private String email;
+
+    private UserImage userImage;
 
     private Date createdAt;
 
@@ -99,6 +102,14 @@ public class UserDto extends BaseDto {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public UserImage getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(UserImage userImage) {
+        this.userImage = userImage;
     }
 
     @Override

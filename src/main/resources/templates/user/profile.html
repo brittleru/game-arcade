@@ -8,28 +8,29 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <header th:replace="fragments/base.html :: header"></header>
+<header th:replace="fragments/base.html :: header"></header>
 
-    <div>
-        <br>
-        User: <span th:text="${userDto.getUsername()}"></span>
-        <br>
-        Full Name: <span th:text="${userDto.getLastName()} + ' ' + ${userDto.getFirstName()}"></span>
-        <br>
-        Email: <span th:text="${userDto.getEmail()}"></span>
-        <br>
-        Role(s): <span th:text="${roles}"></span>
-        <br><br>
-        <div sec:authorize="isAuthenticated()" th:if="${userDto.getUsername() == #authentication.getName()}">
-            <a th:href="@{/profile/edit/{userName}(userName=${userDto.getUsername()})}" class="btn btn-secondary">Edit Profile</a>
-<!--            <form th:action="@{/logout-user}" method="POST">-->
-<!--                <input type="submit" value="Logout" class="btn btn-primary">-->
-<!--            </form>-->
-        </div>
+<div>
+    <br>
+    <img id="profile-pic" th:src="@{/imgs/profile/default.png}" alt="Profile Picture" height="400" width="400">
+    <br>
+    User: <span th:text="${userDto.getUsername()}"></span>
+    <br>
+    Full Name: <span th:text="${userDto.getLastName()} + ' ' + ${userDto.getFirstName()}"></span>
+    <br>
+    Email: <span th:text="${userDto.getEmail()}"></span>
+    <br>
+    Role(s): <span th:text="${roles}"></span>
+    <br><br>
+    <div sec:authorize="isAuthenticated()" th:if="${userDto.getUsername() == #authentication.getName()}">
+        <a th:href="@{/profile/edit/{userName}(userName=${userDto.getUsername()})}" class="btn btn-secondary">Edit
+            Profile</a>
     </div>
+</div>
 
-    <footer th:replace="fragments/base.html :: footer"></footer>
+<footer th:replace="fragments/base.html :: footer"></footer>
 
+<script type="text/javascript" th:src="@{/js/profile.js}"></script>
 </body>
 
 </html>

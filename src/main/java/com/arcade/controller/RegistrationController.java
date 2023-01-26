@@ -2,7 +2,7 @@ package com.arcade.controller;
 
 import com.arcade.entity.user.User;
 import com.arcade.service.user.UserService;
-import com.arcade.validateentity.CheckedUser;
+import com.arcade.validation.entity.CheckedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

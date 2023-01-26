@@ -4,9 +4,9 @@ import com.arcade.entity.user.Role;
 import com.arcade.entity.user.User;
 import com.arcade.service.rest.AdminService;
 import com.arcade.service.user.RoleService;
-import com.arcade.validateentity.CheckedUser;
-import com.arcade.validateentity.CheckedUserForAdmin;
-import com.arcade.validateentity.CheckedUserForUpdate;
+import com.arcade.validation.entity.CheckedUser;
+import com.arcade.validation.entity.CheckedUserForAdmin;
+import com.arcade.validation.entity.CheckedUserForUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,7 +89,7 @@ public class AdminController {
     }
 
     @GetMapping("/user/update/{userId}")
-    public String updateUser(@PathVariable("userId") int userId, Model model) {
+    public String updateUser(@PathVariable("userId") long userId, Model model) {
         User user = adminService.findUserById(userId);
         // TODO: refactor this with builder...
         CheckedUserForUpdate checkedUserForUpdate = new CheckedUserForUpdate();
@@ -112,7 +112,7 @@ public class AdminController {
     }
 
     @GetMapping("/user/delete/{userId}")
-    public String delete(@PathVariable("userId") int userId) {
+    public String delete(@PathVariable("userId") long userId) {
         User deletedUser = adminService.deleteUserById(userId);
         logger.info("Deleted user: " + deletedUser.getUsername() + " with ID: " + userId);
         return REDIRECT_TO_ALL_USERS_HTML;

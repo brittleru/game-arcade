@@ -1,4 +1,4 @@
-package com.arcade.validateentity;
+package com.arcade.validation.entity;
 
 import com.arcade.entity.user.Role;
 import com.arcade.validation.EmailValid;
@@ -11,7 +11,7 @@ import java.util.Date;
 // TODO: add later update functionality for this
 public class CheckedUserForUpdate extends CheckedUser {
 
-    private int id;
+    private long id;
 
     @NotNull(message = "Required")
     @Size(min = 2, message = "Required")
@@ -44,11 +44,11 @@ public class CheckedUserForUpdate extends CheckedUser {
     public CheckedUserForUpdate() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

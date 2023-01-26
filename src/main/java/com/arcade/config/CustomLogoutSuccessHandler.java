@@ -20,8 +20,9 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler im
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException, ServletException {
+        String userName = authentication.getName();
         String refererUrl = request.getHeader("Referer");
-        logger.info("Logout from: " + refererUrl);
+        logger.info("User " + userName + " logout from: " + refererUrl);
         // TODO: maybe add a redirect to the page the user was before
         response.sendRedirect(request.getContextPath() + "/?logout");
     }

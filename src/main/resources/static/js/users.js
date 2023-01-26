@@ -10,8 +10,9 @@ const usersTableBody = document.getElementById("users-table-body");
 const endpointsApiEndpoint = "/arcadeit/api/v1/endpoints";
 const usersApiEndpoint = "/arcadeit/api/v1/users";
 const usersBasicInfoApiEndpoint = "/arcadeit/api/v1/users-basic-info";
-const updateUserEndpoint = "/arcadeit/admin/user/update";
-const deleteUserEndpoint = "/arcadeit/admin/user/delete";
+const updateUserEndpoint = "/arcadeit/admin/user/update/";
+const deleteUserEndpoint = "/arcadeit/admin/user/delete/";
+const userProfileEndpoint = "/arcadeit/profile/user/";
 
 function fetchUsersApi() {
     fetch(usersApiEndpoint).then(response => {
@@ -21,6 +22,11 @@ function fetchUsersApi() {
             let tr = document.createElement("tr");
             let id = 0;
             Object.keys(value).map(key => {
+                if (value[key] === value["userImage"]) {
+                    // Skip this for now, maybe use when deploy to cloud when and DB query for image would be faster
+                    return undefined;
+                }
+
                 let td = document.createElement("td");
                 let rolesString = "";
                 switch (value[key]) {
@@ -35,10 +41,13 @@ function fetchUsersApi() {
                         td.innerHTML = "PROTECTED";
                         break;
                     case value["createdAt"]:
-                        td.innerHTML = value[key] ? `${new Date(value[key])}` : "invalid";
+                        td.innerHTML = value[key] ? `${new Date(value[key]).toUTCString()}` : "invalid";
                         break;
                     case value["updatedAt"]:
-                        td.innerHTML = value[key] ? `${new Date(value[key])}` : "invalid";
+                        td.innerHTML = value[key] ? `${new Date(value[key]).toUTCString()}` : "invalid";
+                        break;
+                    case value["username"]:
+                        td.innerHTML = `<a href="${userProfileEndpoint + value[key]}">${value[key]}</a>`;
                         break;
                     default:
                         td.innerHTML = `${value[key]}`;
@@ -48,8 +57,8 @@ function fetchUsersApi() {
             });
             let actionTdElement = document.createElement("td");
             // TODO: add style for this and change href
-            actionTdElement.innerHTML = `<a href="${updateUserEndpoint + "/" + id}" class="btn btn-info">Update</a>
-                                         <a href="${deleteUserEndpoint + "/" + id}" class="btn btn-danger" 
+            actionTdElement.innerHTML = `<a href="${updateUserEndpoint + id}" class="btn btn-info">Update</a>
+                                         <a href="${deleteUserEndpoint + id}" class="btn btn-danger" 
                                             onclick="if (!confirm('Are you sure you want to delete this user with ID: ${id}')) return false">
                                                 Delete
                                          </a>`;

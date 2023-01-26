@@ -4,7 +4,7 @@ import com.arcade.dao.user.RoleDao;
 import com.arcade.dao.user.UserDao;
 import com.arcade.entity.user.Role;
 import com.arcade.entity.user.User;
-import com.arcade.validateentity.CheckedUser;
+import com.arcade.validation.entity.CheckedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,6 +54,18 @@ public class UserServiceImplementation implements UserService {
         user.setRoles(List.of(roleDao.findRoleByName("ROLE_NORMAL")));
 
         userDao.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateNames(User user, String firstName, String lastName) {
+        String prevFirstName = user.getFirstName();
+        String prevLastName = user.getLastName();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        userDao.save(user);
+        logger.info(String.format("User %s updated. Changed (%s -> %s) and (%s -> %s)",
+                user.getUsername(), prevFirstName, firstName, prevLastName, lastName));
     }
 
     @Override
