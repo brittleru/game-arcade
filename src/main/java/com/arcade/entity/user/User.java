@@ -2,12 +2,14 @@ package com.arcade.entity.user;
 
 
 import com.arcade.entity.BaseEntity;
+import com.arcade.entity.HighScore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -40,6 +42,8 @@ public class User extends BaseEntity {
     @UpdateTimestamp
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<HighScore> highScores;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -114,6 +118,19 @@ public class User extends BaseEntity {
         this.roles = userBuilder.roles;
     }
 
+    public User(String username, String password, String firstName, String lastName, String email, UserImage userImage, Date createdAt, Date updatedAt, List<HighScore> highScores, Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userImage = userImage;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.highScores = highScores;
+        this.roles = roles;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -184,6 +201,14 @@ public class User extends BaseEntity {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<HighScore> getHighScores() {
+        return highScores;
+    }
+
+    public void setHighScores(List<HighScore> highScores) {
+        this.highScores = highScores;
     }
 
     public static class UserBuilder {

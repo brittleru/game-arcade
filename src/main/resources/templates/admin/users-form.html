@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" th:href="@{/css/users.css}">
+    <th:block th:insert="fragments/base.html :: headerfiles"></th:block>
     <title>Save User</title>
 </head>
-<body>
-
-<div class="">
-    <h3>User Directory</h3>
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="fragments/base.html :: header"></header>
+<div class="col-md-4 col-md-offset-2 col-sm-6 col-sm-offset-2 container" style="margin-top: 50px;">
+    <h2 class="text-center">User Directory</h2>
     <hr>
 
-    <p class="">Save an User</p>
+    <h3 class="text-center">Save an User</h3>
 
     <form id="users-form" class="" th:action="@{/admin/user/save}" th:object="${user}" method="POST">
 
@@ -34,8 +35,9 @@
             <input id="user-id" type="hidden" th:field="*{id}" value="id">
         </div>
 
-        <div class="row">
-            <input id="username" type="text" th:field="*{userName}" value="username" class="" placeholder="Username">
+        <div class="form-group">
+            <label for="username">Your Username</label>
+            <input type="text" id="username" class="form-control" th:field="*{userName}" value="username" placeholder="Username">
         </div>
         <div th:if="${#fields.hasErrors('userName')}" style="margin-bottom: 25px" class="text-danger">
             <ul>
@@ -43,8 +45,9 @@
             </ul>
         </div>
 
-        <div class="row">
-            <input id="password" type="text" th:field="*{password}" value="password" class="" placeholder="Password">
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" id="password" th:field="*{password}" value="password" class="form-control" placeholder="Password" >
         </div>
         <div th:if="${#fields.hasErrors('password')}"
              style="margin-bottom: 25px" class="text-danger">
@@ -53,8 +56,9 @@
             </ul>
         </div>
 
-        <div class="row">
-            <input id="matchingPassword" type="text" th:field="*{matchingPassword}" value="password" class="" placeholder="Confirm Password">
+        <div class="form-group">
+            <label for="matchingPassword">Confirm Password</label>
+            <input type="text" id="matchingPassword" class="form-control" th:field="*{matchingPassword}" value="password" placeholder="Confirm Password">
         </div>
         <div th:if="${#fields.hasErrors('matchingPassword')}"
              style="margin-bottom: 25px" class="text-danger">
@@ -63,9 +67,9 @@
             </ul>
         </div>
 
-
-        <div class="row">
-            <input id="first-name" type="text" th:field="*{firstName}" value="firstName" class="" placeholder="First Name">
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input id="first-name" type="text" class="form-control"  th:field="*{firstName}" value="firstName" placeholder="First Name">
         </div>
         <div th:if="${#fields.hasErrors('firstName')}"
              style="margin-bottom: 25px" class="text-danger">
@@ -74,8 +78,9 @@
             </ul>
         </div>
 
-        <div class="row">
-            <input id="last-name" type="text" th:field="*{lastName}" value="lastName" class="" placeholder="Last Name">
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input id="last-name" type="text" class="form-control"  th:field="*{lastName}" value="lastName" placeholder="Last Name">
         </div>
         <div th:if="${#fields.hasErrors('lastName')}"
              style="margin-bottom: 25px" class="text-danger">
@@ -84,8 +89,9 @@
             </ul>
         </div>
 
-        <div class="row">
-            <input id="email" type="text" th:field="*{email}" value="email" class="" placeholder="Email"/>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="text" class="form-control"  th:field="*{email}" value="email" placeholder="Email">
         </div>
         <div th:if="${#fields.hasErrors('email')}" style="margin-bottom: 25px" class="text-danger">
             <ul>
@@ -93,27 +99,25 @@
             </ul>
         </div>
 
-        <div class="row">
-            <div>Roles
-                <label th:each="role: ${allRoles}" th:for="${role.name}">
-                    <input th:id="${role.name}" type="checkbox"
-                           th:text="${role.name.replace('ROLE_', '').substring(0, 1) + role.name.replace('ROLE_', '').substring(1).toLowerCase()}"
-                           th:value="${role.id}"
-                           th:field="*{roles}">
-                </label>
-
-            </div>
+        <div class="form-check">
+            <div>Roles</div>
+            <label th:each="role: ${allRoles}" th:for="${role.name}">
+                <input th:id="${role.name}" type="checkbox"
+                       th:text="${role.name.replace('ROLE_', '').substring(0, 1) + role.name.replace('ROLE_', '').substring(1).toLowerCase()}"
+                       th:value="${role.id}"
+                       th:field="*{roles}">
+            </label>
         </div>
 
-        <div class="row">
-            <button type="submit" class="btn btn-info col col-sm-2" name="button">Save</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary" name="button">Save</button>
         </div>
-
     </form>
 
-    <a th:href="@{/admin/users/all}" class="btn btn-primary">Back</a>
+    <a th:href="@{/admin/users/all}" class="btn btn btn-secondary">Back</a>
 </div>
 
 <script type="text/javascript" th:src="@{/js/saveUpdateUsers.js}"></script>
+<footer th:replace="fragments/base.html :: footer"></footer>
 </body>
 </html>

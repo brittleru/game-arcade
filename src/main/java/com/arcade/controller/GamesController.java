@@ -32,4 +32,8 @@ public class GamesController {
         return "builds/rocket/index";
     }
 
+    @GetMapping("/snake")
+    public String getSnake() {
+        return "games/js/snake";
+    }
 }

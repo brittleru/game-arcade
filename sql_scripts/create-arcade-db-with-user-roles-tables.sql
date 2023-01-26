@@ -36,7 +36,7 @@ INSERT INTO `user` (username, password, first_name, last_name, email)
 VALUES ('brittle', '$2a$12$Vel7WbGZgK/PvWfXFLKWYuPM1qFMk/qkGJTSJY0yQiizi4Sww.K/C', 'Sebastian', 'Mocanu',
         'sebastian@gmail.com'),
        ('medi', '$2a$12$Vel7WbGZgK/PvWfXFLKWYuPM1qFMk/qkGJTSJY0yQiizi4Sww.K/C', 'Medi', 'Mocanu',
-        'luisa@gmail.com'),
+        'medi@gmail.com'),
        ('jane', '$2a$12$Vel7WbGZgK/PvWfXFLKWYuPM1qFMk/qkGJTSJY0yQiizi4Sww.K/C', 'Jane', 'Doe', 'jane.doe@gmail.com');
 
 /*
@@ -121,3 +121,23 @@ VALUES (1, 1),
        (2, 1),
        (2, 2),
        (3, 1);
+
+/*
+*
+* Generating table structure for `high_score`;
+*
+*/
+DROP TABLE IF EXISTS `high_score`;
+CREATE TABLE `high_score`
+(
+    `id`         int(11)      NOT NULL AUTO_INCREMENT,
+    `game`       varchar(255) NOT NULL,
+    `score`      int          NOT NULL,
+    `username`   varchar(50)  NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    foreign key (`username`) references user (`username`),
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8;

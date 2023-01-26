@@ -7,22 +7,25 @@
     <th:block th:insert="fragments/base.html :: headerfiles"></th:block>
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <header th:replace="fragments/base.html :: header"></header>
+<header th:replace="fragments/base.html :: header"></header>
 
-
-    <div th:each="game : ${games}">
+<div class="container" style="margin-top: 150px;">
+    <div th:each="game : ${games}" class="text-center">
         <h1 th:text="${game}"></h1>
     </div>
     <div>
+        <h3>Rocket Science: </h3>
         <a th:href="@{/games/rocket-science}" class="btn btn-info">Play</a>
     </div>
-
-    <br><br><br>
-
     <div>
+        <h3>Snake: </h3>
+        <a th:href="@{/games/snake}" class="btn btn-info">Play</a>
+    </div>
+    <div class="text-center" style="margin-top: 45px;">
         <a th:href="@{/profile/user}" class="btn btn-secondary">Profile</a>
     </div>
+</div>
 
-    <footer th:replace="fragments/base.html :: footer"></footer>
+<footer th:replace="fragments/base.html :: footer"></footer>
 </body>
 </html>

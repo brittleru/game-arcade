@@ -10,18 +10,13 @@
 <body class="d-flex flex-column min-vh-100">
 <header th:replace="fragments/base.html :: header"></header>
 
-<div class="main-content">
+<div style="margin: 50px;">
+    <h3 class="text-center" style="margin-bottom: 20px;">All Users</h3>
+    <div class="text-center" style="margin: 20px;" sec:authorize="hasAnyRole('ROLE_SUPERUSER', 'ROLE_ADMIN')">
+        <a th:href="@{/admin/users-form}" class="btn btn-primary">Add User</a>
+    </div>
     <div class="admin-panel">
-
         <div class="users-ui">
-
-            <div class="" sec:authorize="hasAnyRole('ROLE_SUPERUSER', 'ROLE_ADMIN')">
-                <a th:href="@{/admin/users-form}" class="btn btn-primary">Add User</a>
-            </div>
-
-        </div>
-
-        <div class="users-list">
 
             <table id="users-table-id" class="users-table">
                 <thead id="users-table-head">

@@ -2,20 +2,12 @@ html, body {
     /*background-color: #222222;*/
 }
 
-.main-content {
-    border: 1px solid #da0909;
-}
-
 .admin-panel {
     border: 1px solid #418172;
 }
 
 .users-ui {
     border: 1px solid #4a7226;
-}
-
-.users-list {
-    border: 1px solid #e58b00;
 }
 
 table.users-table {
@@ -35,4 +27,12 @@ table.users-table td, table.users-table th {
 
 table.users-table thead {
     background-color: #139056;
+}
+
+.centered-text {
+    text-align: center;
+}
+
+.blue {
+    color: blue;
 }

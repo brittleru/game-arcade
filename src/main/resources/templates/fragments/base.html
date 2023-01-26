@@ -24,78 +24,83 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <nav th:fragment="header" class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation" aria-label="main navigation">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-arcade" aria-controls="navbar-toggler" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbar-arcade" class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <a class="navbar-brand ms-5" th:href="@{/}"><h2>GameArcade</h2></a>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/games/list}">Games</a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/profile/user}" >Profile</a>
-                </li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERUSER')">
-                    <a class="nav-link" th:href="@{/admin/users/all}">Users</a>
-                </li>
-                <li class="nav-item dropdown">
-                        <a id="navbar-dropdown-menu" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hall of Fame
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
-                            <a class="dropdown-item" href="">High Scores</a>
-                            <a class="dropdown-item" href="">Speedrunners</a>
-                            <hr class="navbar-divider">
-                            <a class="dropdown-item" href="">Report an Abuse</a>
-                        </div>
-                </li>
-            </ul>
+<nav th:fragment="header" class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation"
+     aria-label="main navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-arcade"
+            aria-controls="navbar-toggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbar-arcade" class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <a class="navbar-brand ms-5" th:href="@{/}"><h2>GameArcade</h2></a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/games/list}">Games</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/profile/user}">Profile</a>
+            </li>
+            <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERUSER')">
+                <a class="nav-link" th:href="@{/admin/users/all}">Users</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a id="navbar-dropdown-menu" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Hall of Fame
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
+                    <li><a class="dropdown-item" href="">High Scores</a></li>
+                    <li><a class="dropdown-item" href="">Speedrunners</a></li>
+                    <li>
+                        <hr class="navbar-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="">Report an Abuse</a></li>
+                </ul>
+            </li>
+        </ul>
 
-<!--            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-arcade">-->
-<!--                <span aria-hidden="true"></span>-->
-<!--                <span aria-hidden="true"></span>-->
-<!--                <span aria-hidden="true"></span>-->
-<!--            </a>-->
-        </div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav mx-auto">
-                <li sec:authorize="!isAuthenticated()" class="nav-item">
-                    <a class="btn btn-primary" th:href="@{/register/show-register}">
-                        <strong>Sign Up</strong>
-                    </a>
-                    <a th:href="@{/login}" class="btn btn-success">Login</a>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <form th:action="@{/logout-user}" method="POST">
-                        <input type="submit" value="Logout" class="btn btn-success">
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <!--            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-arcade">-->
+        <!--                <span aria-hidden="true"></span>-->
+        <!--                <span aria-hidden="true"></span>-->
+        <!--                <span aria-hidden="true"></span>-->
+        <!--            </a>-->
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav mx-auto">
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
+                <a class="btn btn-primary" th:href="@{/register/show-register}">
+                    <strong>Sign Up</strong>
+                </a>
+                <a th:href="@{/login}" class="btn btn-success">Login</a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item">
+                <form th:action="@{/logout-user}" method="POST">
+                    <input type="submit" value="Logout" class="btn btn-success">
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-    <p>Go to the next page to see fragments in action</p>
+<p>Go to the next page to see fragments in action</p>
 
-    <aside>
-        <div>This is a sidebar</div>
-    </aside>
+<aside>
+    <div>This is a sidebar</div>
+</aside>
 
-    <div class="another">This is another sidebar</div>
+<div class="another">This is another sidebar</div>
 
-    <footer th:fragment="footer" class="mt-auto">
-        <div class="container-fluid">
-            <div class="row text-center">
-                <div class="col-12">
-                    <p><b>&copy;</b> 2023 <span class="text-highlight-color"><b>Mocanu Sebastian</b></span></p>
-                </div>
+<footer th:fragment="footer" class="mt-auto">
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-12">
+                <p><b>&copy;</b> 2023 <span class="text-highlight-color"><b>Mocanu Sebastian</b></span></p>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
 </body>
 </html>

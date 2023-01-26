@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <title>Snake</title>
+    <link rel="stylesheet" th:href="@{/css/games.css}">
+    <th:block th:insert="fragments/base.html :: headerfiles"></th:block>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="fragments/base.html :: header"></header>
+
+<div sec:authorize="isAuthenticated()">
+    <div id="user-data-id" class="user-data">
+        <!-- TODO: get username and highest score from controller -->
+        <h5><span id="username-id" sec:authentication="name"></span>'s highest score: <span id="score-id"></span></h5>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center snake-canvas-class">
+
+    <div id="snake-canvas" class="snake-canvas-js">
+
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/games/lib/p5min.js}"></script>
+<script type="text/javascript" th:src="@{/js/games/snake/Snake.js}"></script>
+<script type="text/javascript" th:src="@{/js/games/snake/TileSnake.js}"></script>
+
+<footer th:replace="fragments/base.html :: footer"></footer>
+</body>
+</html>
