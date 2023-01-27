@@ -10,13 +10,13 @@ function TileSnake(x, y) {
 TileSnake.prototype.update = function (food) {
 
     /* 'move' the head */
-    var nextTile = this.body[0].copy().add(this.direction); // new tile at the head
+    let nextTile = this.body[0].copy().add(this.direction); // new tile at the head
 
     this.body.unshift(nextTile); // push head to the front of the body
 
     /* test if the snake runs into itself */
-    for (var i = 0; i < this.body.length; i++) {
-        if (i != 0 && checkCollision(this.body[0], this.body[i])) {
+    for (let i = 0; i < this.body.length; i++) {
+        if (i !== 0 && checkCollision(this.body[0], this.body[i])) {
             /* dead! */
 
             this.alive = false;
@@ -52,7 +52,7 @@ TileSnake.prototype.update = function (food) {
 TileSnake.prototype.draw = function () {
 
     fill(255);
-    for (var j = 0; j < this.body.length; j++) {
+    for (let j = 0; j < this.body.length; j++) {
 
         rect(this.body[j].x * SCL, this.body[j].y * SCL, SCL, SCL);
     }

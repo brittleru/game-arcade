@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "high_score")
@@ -95,6 +96,19 @@ public class HighScore extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HighScore highScore = (HighScore) o;
+        return id == highScore.id && score == highScore.score && Objects.equals(game, highScore.game) && Objects.equals(createdAt, highScore.createdAt) && Objects.equals(updatedAt, highScore.updatedAt) && Objects.equals(user, highScore.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, game, score, createdAt, updatedAt, user);
     }
 
     @Override

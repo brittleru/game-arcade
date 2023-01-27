@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 
 @Service
 public class HighScoreServiceImplementation implements HighScoreService {
-
     private final static Logger logger = Logger.getLogger(HighScoreServiceImplementation.class.getName());
     private final EntityManager entityManager;
     private final UserService userService;
@@ -34,7 +33,6 @@ public class HighScoreServiceImplementation implements HighScoreService {
         Query<HighScore> query = session.createQuery("from HighScore order by id", HighScore.class);
         if (query.getResultList() == null) {
             logger.info("No high scores found");
-            throw new UserNotFoundException("No high scores found.");
         }
         return query.getResultList();
     }
@@ -48,7 +46,6 @@ public class HighScoreServiceImplementation implements HighScoreService {
 
         if (query.getResultList() == null) {
             logger.info("No high scores found");
-            throw new UserNotFoundException("No high scores found.");
         }
 
         return query.getResultList();
@@ -67,9 +64,6 @@ public class HighScoreServiceImplementation implements HighScoreService {
         } catch (Exception e) {
             logger.warning("Can't find HighScore with ID of " + id);
             logger.warning(e.getMessage());
-        }
-        if (highScore == null) {
-            throw new UserNotFoundException("HighScore with ID of - " + id + " not found");
         }
         return highScore;
     }
@@ -109,8 +103,16 @@ public class HighScoreServiceImplementation implements HighScoreService {
             if (user == null) {
                 throw new UserNotFoundException("Invalid user with for high score: " + highScore);
             }
+            for (HighScore userHighScore: user.getHighScores()) {
+                if (userHighScore.getGame().equals(highScore.getGame())) {
+                    if (highScore.getScore() <= userHighScore.getScore()) {
+                        return;
+                    }
+                }
+            }
             highScore.setUser(user);
-            session.saveOrUpdate(highScore);
+            session.evict(highScore);
+            session.merge(highScore);
             logger.info(String.format("Updated new high score (%s) for (%s) at game (%s).",
                     highScore.getScore(), highScore.getUser().getUsername(), highScore.getGame()));
             return;

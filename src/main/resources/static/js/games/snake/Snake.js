@@ -1,10 +1,8 @@
 const divCanvas = document.getElementById("snake-canvas");
-const username = document.getElementById("username-id");
-const highestScore = document.getElementById("score-id");
 
-const SCL = 20; // size of each tile
+const SCL = 20;
 let frameRateNum = 10;
-let wOs, hOs; // width over SCL, height over SCL
+let wOs, hOs;
 
 let snake;
 
@@ -37,13 +35,16 @@ function draw() {
         snake.draw();
     } else {
         // TODO: add score functionality here
+        populateNewHighScore().then(() => {});
         console.log(score);
         gameOver();
     }
-
-    fill(random(255), 0, random(255));
+    if (score > highestScore.innerHTML) {
+        highestScore.innerHTML = score;
+    }
+    text(`Score: ${score}`, SCL + 45, SCL + 20);
+    fill(random(255), random(255), random(255));
     rect(food.x * SCL, food.y * SCL, SCL, SCL);
-    text(`Score: ${score}`, SCL + 40, SCL + 20);
 }
 
 function gameOver() {
@@ -78,3 +79,4 @@ function keyPressed() {
             break;
     }
 }
+

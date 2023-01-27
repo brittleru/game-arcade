@@ -56,6 +56,12 @@ public class UsersController {
         return userBasicInfoConverter.fromEntityToDto(user);
     }
 
+    @GetMapping("/users-basic-info/user/{username}")
+    public UserBasicInfoDto getUserBasicInfoByUsername(@PathVariable("username") String username) {
+        User user = adminService.findUserByUsername(username);
+        return userBasicInfoConverter.fromEntityToDto(user);
+    }
+
     /**
      * User id is set to 0 just in case the in the request body (in JSON) an ID is not passed
      * This will force a save of a new item in database instead of update

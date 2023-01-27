@@ -5,6 +5,8 @@ import com.arcade.dto.converter.HighScoreConverter;
 import com.arcade.entity.HighScore;
 import com.arcade.service.highscore.HighScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,9 +44,12 @@ public class HighScoreController {
     }
 
     @GetMapping("/score/{game}/{username}")
-    public HighScoreDto getHighScore(@PathVariable("game") String game, @PathVariable("username") String username) {
+    public ResponseEntity<HighScoreDto> getHighScore(@PathVariable("game") String game, @PathVariable("username") String username) {
         HighScore highScore = highScoreService.findHighScoreByGameAndUsername(game, username);
-        return highScoreConverter.fromEntityToDto(highScore);
+        if (highScore == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+        return ResponseEntity.ok(highScoreConverter.fromEntityToDto(highScore));
     }
 
 
