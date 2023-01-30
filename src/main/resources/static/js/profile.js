@@ -2,8 +2,6 @@
  * Cache the DOM
  */
 const profilePicture = document.getElementById("profile-pic");
-// const imageForm = document.getElementById("image-form");
-// const imageFile = document.getElementById("image-file");
 
 /**
  * Rest API endpoints
@@ -11,7 +9,6 @@ const profilePicture = document.getElementById("profile-pic");
 // const uploadPictureEndpoint = "/arcadeit/api/v1/users/upload";
 const userPictureNameEndpoint = "/arcadeit/api/v1/profile/picture/profile-image/";
 const getUserPictureEndpoint = "/arcadeit/api/v1/profile/picture/";
-const getAuthenticatedUsernameEndpoint = "/arcadeit/api/v1/user/authenticated";
 const actualURL = window.location.href;
 
 async function useProfilePictureIfExistent() {

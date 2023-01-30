@@ -76,4 +76,9 @@ public class ProfileController {
         return "redirect:/profile/user/" + user.getUsername();
     }
 
+    @PostMapping("/upload/picture")
+    public String uploadImageForUser(Authentication authentication) {
+        return "redirect:/profile/user/" + authentication.getName();
+    }
+
 }

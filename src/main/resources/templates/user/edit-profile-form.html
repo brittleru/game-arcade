@@ -68,9 +68,11 @@
         <!-- TODO: when changing the image show the user how his new image will look like -->
         <h3 class="text-center" style="margin-top: 50px;">Profile picture</h3>
         <form style="margin-top: 30px;" id="image-form" class="container text-center"
-              th:action="@{/api/v1/profile/picture/upload}" th:method="post"
+              th:action="@{/profile/upload/picture}" th:method="post"
               enctype="multipart/form-data">
             <input type="file" id="image-file" name="profileImage" required>
+            <h5 id="new-image-text">Your profile picture</h5>
+            <img id="new-image" th:src="@{/imgs/profile/default.png}" alt="Your new profile image">
             <div class="text-center" style="margin-top: 30px;">
                 <button type="submit" class="btn btn-info">Change Photo</button>
             </div>
@@ -83,6 +85,8 @@
 </div>
 
 <footer th:replace="fragments/base.html :: footer"></footer>
+
+<script type="text/javascript" th:src="@{/js/editProfile.js}"></script>
 
 </body>
 

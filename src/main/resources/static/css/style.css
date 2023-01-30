@@ -46,3 +46,8 @@ ul li ul li {
     clear: both;
     width: 100%;
 }
+
+#new-image {
+    width: 150px;
+    height: 150px;
+}
