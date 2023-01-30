@@ -34,6 +34,7 @@ public class User extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_image_id", referencedColumnName = "id")
+    @JsonManagedReference
     private UserImage userImage;
 
     @Column(name = "created_at")

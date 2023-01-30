@@ -49,6 +49,7 @@ public class HighScoreController {
         if (highScore == null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
+        highScore.getUser().setUserImage(null);
         return ResponseEntity.ok(highScoreConverter.fromEntityToDto(highScore));
     }
 

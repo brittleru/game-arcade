@@ -1,5 +1,6 @@
 package com.arcade.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,6 +27,7 @@ public class UserImage {
     private byte[] imageData;
 
     @OneToOne(mappedBy = "userImage")
+    @JsonBackReference
     private User user;
 
     @Column(name = "created_at")

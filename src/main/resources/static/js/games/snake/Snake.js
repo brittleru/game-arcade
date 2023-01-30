@@ -34,10 +34,10 @@ function draw() {
         }
         snake.draw();
     } else {
-        // TODO: add score functionality here
-        populateNewHighScore().then(() => {});
-        console.log(score);
         gameOver();
+        populateNewHighScore().then(() => {}).catch(error => {
+            console.log(error)
+        });
     }
     if (score > highestScore.innerHTML) {
         highestScore.innerHTML = score;

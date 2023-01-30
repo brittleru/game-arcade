@@ -17,24 +17,18 @@ TileSnake.prototype.update = function (food) {
     /* test if the snake runs into itself */
     for (let i = 0; i < this.body.length; i++) {
         if (i !== 0 && checkCollision(this.body[0], this.body[i])) {
-            /* dead! */
-
             this.alive = false;
         }
     }
 
     /* wrap around edges */
     if (this.body[0].x > wOs) {
-
         this.body[0].x = 0;
     } else if (this.body[0].x < 0) {
-
         this.body[0].x = wOs;
     } else if (this.body[0].y > hOs) {
-
         this.body[0].y = 0;
     } else if (this.body[0].y < 0) {
-
         this.body[0].y = hOs;
     }
 
@@ -73,6 +67,5 @@ TileSnake.prototype.direct = function (direction) {
  * occupy the same tile
  */
 function checkCollision(tile1, tile2) {
-
     return (tile1.x === tile2.x) && (tile1.y === tile2.y);
 }
